@@ -12,15 +12,14 @@ class LoginButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 25),
       width: double.infinity,
       child: RaisedButton(
+        disabledColor: Colors.white,
+        color: Colors.white,
         elevation: 5,
-        onPressed: () {
-          print('Login Pressed');
-        },
-        padding: const EdgeInsets.all(15),
+        onPressed: onpress(),
+        padding: EdgeInsets.all(15),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        color: Colors.white,
         child: Text(
           buttonName,
           style: TextStyle(

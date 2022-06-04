@@ -5,14 +5,14 @@ class TextIputField extends StatelessWidget {
       {required this.icon,
       required this.textFieldName,
       required this.hint,
-      required this.onchange,
+      required this.onchangeFunction,
       required this.inputType,
       required this.inputAction});
 
   final IconData icon;
   final String textFieldName;
   final String hint;
-  final Function onchange;
+  final ValueChanged<String> onchangeFunction;
   final TextInputType inputType;
   final TextInputAction inputAction;
 
@@ -60,7 +60,7 @@ class TextIputField extends StatelessWidget {
                 color: Colors.black38,
               ),
             ),
-            onChanged: onchange(),
+            onChanged: onchangeFunction,
           ),
         ),
       ],

@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fashcop/widgets/text_input_field.dart';
 import 'package:fashcop/widgets/password_field.dart';
 import 'package:fashcop/widgets/login_button.dart';
+import 'package:fashcop/screens/first_signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const String id = 'login_screen';
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -65,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget buildSignUpBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Pressed'),
+      onTap: () => Navigator.pushNamed(context, FirstSignUpScreen.id),
       child: RichText(
         text: const TextSpan(children: [
           TextSpan(
@@ -97,17 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0x665ac18e),
-                        Color(0x995ac18e),
-                        Color(0xcc5ac18e),
-                        Color(0xff5ac18e),
-                      ]),
-                ),
+                decoration: kBackgroundcolour,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
@@ -131,7 +125,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: Icons.email,
                           textFieldName: 'Email',
                           hint: 'Email',
-                          onchange: () {},
+                          onchangeFunction: (value) {
+                            print(value);
+                          },
                           inputType: TextInputType.emailAddress,
                           inputAction: TextInputAction.next),
                       const SizedBox(height: 20),
@@ -140,12 +136,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: Icons.lock,
                           passwordFieldName: 'Password',
                           hint: 'Password',
-                          onchange: () {},
+                          onchangeFunction: (value) {
+                            print(value);
+                          },
                           inputType: TextInputType.name,
                           inputAction: TextInputAction.next),
                       SizedBox(height: 10),
                       buildRememberMe(),
-                      LoginButton(buttonName: 'LOGIN', onpress: () {}),
+                      LoginButton(
+                          buttonName: 'LOGIN',
+                          onpress: () {
+                            print('login pressed');
+                          }),
                       buildSignUpBtn(),
                     ],
                   ),

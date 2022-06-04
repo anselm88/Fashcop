@@ -5,13 +5,13 @@ class PasswordField extends StatelessWidget {
       {required this.icon,
       required this.passwordFieldName,
       required this.hint,
-      required this.onchange,
+      required this.onchangeFunction,
       required this.inputType,
       required this.inputAction});
   final IconData icon;
   final String passwordFieldName;
   final String hint;
-  final Function onchange;
+  final ValueChanged<String> onchangeFunction;
   final TextInputType inputType;
   final TextInputAction inputAction;
   @override
@@ -58,7 +58,7 @@ class PasswordField extends StatelessWidget {
                 hintStyle: TextStyle(
                   color: Colors.black38,
                 )),
-            onChanged: onchange(),
+            onChanged: onchangeFunction,
           ),
         ),
       ],
