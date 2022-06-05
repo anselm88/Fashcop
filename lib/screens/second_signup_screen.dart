@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:fashcop/widgets/text_input_field.dart';
-import 'package:fashcop/widgets/password_field.dart';
 import 'package:fashcop/widgets/login_button.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class SecondSignUpScreen extends StatefulWidget {
   static const String id = 'second_signup_screen';
@@ -13,11 +14,12 @@ class SecondSignUpScreen extends StatefulWidget {
 }
 
 class _SecondSignUpScreen extends State<SecondSignUpScreen> {
+  PickedFile? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
   List gender = ["Male", "Female", "Other"];
 
   String? select;
-
-  get fillColor => null;
 
   Row addRadioButton(int btnValue, String title) {
     return Row(
@@ -25,10 +27,10 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
       children: <Widget>[
         Radio(
           fillColor:
-              MaterialStateProperty.all<Color?>(Color.fromARGB(97, 0, 0, 0)),
+              MaterialStateProperty.all<Color?>(Color.fromARGB(66, 0, 0, 0)),
           value: gender[btnValue],
           groupValue: select,
-          onChanged: (dynamic? value) {
+          onChanged: (dynamic value) {
             setState(() {
               print(value);
               select = value;
@@ -48,22 +50,77 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
   Widget imageProfile() {
     return Center(
       child: Stack(
-        children: const [
-          CircleAvatar(
-            radius: 80.0,
-            backgroundImage: AssetImage("assets/profile.png"),
-          ),
+        children: [
+          const CircleAvatar(
+              radius: 80.0, backgroundImage: AssetImage("assets/profile1.png")
+              //backgroundImage: _imageFile==null? const AssetImage("assets/profile1.png"): FileImage(File(_imageFile?.path)),
+              ),
           Positioned(
             bottom: 20.0,
             right: 20.0,
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.teal,
+            child: InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                    context: context, builder: ((builder) => bottomSheet()));
+              },
+              child: const Icon(
+                Icons.camera_alt,
+                color: Colors.teal,
+                size: 30.0,
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100.0,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20.0,
+        vertical: 20.0,
+      ),
+      child: Column(children: <Widget>[
+        const Text(
+          "Choose Profile Picture",
+          style: TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlatButton.icon(
+              onPressed: () {
+                takePhoto(ImageSource.camera);
+              },
+              icon: Icon(Icons.camera),
+              label: Text("Camera"),
+            ),
+            FlatButton.icon(
+              onPressed: () {
+                takePhoto(ImageSource.gallery);
+              },
+              icon: Icon(Icons.image),
+              label: Text("Gallery"),
+            ),
+          ],
+        )
+      ]),
+    );
+  }
+
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await _picker.getImage(source: source);
+    setState(() {
+      _imageFile = pickedFile;
+    });
   }
 
   @override
@@ -111,6 +168,15 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                       ),
                       const SizedBox(height: 20),
 
+                      TextIputField(
+                        icon: Icons.location_city,
+                        textFieldName: 'Location',
+                        hint: 'Region/Town',
+                        onchangeFunction: (value) {},
+                        inputType: TextInputType.text,
+                        inputAction: TextInputAction.done,
+                      ),
+                      const SizedBox(height: 20),
                       const Text(
                         'Gender',
                         style: TextStyle(
@@ -128,7 +194,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                         ],
                       ),
 
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
 
                       LoginButton(
                           buttonName: 'NEXT',
