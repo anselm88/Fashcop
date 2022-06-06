@@ -157,6 +157,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                         onchangeFunction: (value) {},
                         inputType: TextInputType.name,
                         inputAction: TextInputAction.next,
+                        style: KLoginTextFieldNameStyle,
                       ),
                       const SizedBox(height: 20),
                       TextIputField(
@@ -166,6 +167,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                         onchangeFunction: (value) {},
                         inputType: TextInputType.datetime,
                         inputAction: TextInputAction.next,
+                        style: KLoginTextFieldNameStyle,
                       ),
                       const SizedBox(height: 20),
 
@@ -176,6 +178,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                         onchangeFunction: (value) {},
                         inputType: TextInputType.text,
                         inputAction: TextInputAction.done,
+                        style: KLoginTextFieldNameStyle,
                       ),
                       const SizedBox(height: 20),
                       const Text(

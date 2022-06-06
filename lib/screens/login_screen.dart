@@ -122,14 +122,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 50),
 
                       TextIputField(
-                          icon: Icons.email,
-                          textFieldName: 'Email',
-                          hint: 'Email',
-                          onchangeFunction: (value) {
-                            print(value);
-                          },
-                          inputType: TextInputType.emailAddress,
-                          inputAction: TextInputAction.next),
+                        icon: Icons.email,
+                        textFieldName: 'Email',
+                        hint: 'Email',
+                        onchangeFunction: (value) {
+                          print(value);
+                        },
+                        inputType: TextInputType.emailAddress,
+                        inputAction: TextInputAction.next,
+                        style: KLoginTextFieldNameStyle,
+                      ),
                       const SizedBox(height: 20),
 
                       PasswordField(

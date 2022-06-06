@@ -1,11 +1,14 @@
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/material.dart';
 
-class TextIputField extends StatelessWidget {
-  TextIputField(
+class MultiLineTextInputField extends StatelessWidget {
+  MultiLineTextInputField(
       {required this.icon,
       required this.textFieldName,
       required this.hint,
+      required this.maxLines,
+      required this.minLines,
+      required this.height,
       required this.style,
       required this.onchangeFunction,
       required this.inputType,
@@ -14,6 +17,9 @@ class TextIputField extends StatelessWidget {
   final IconData icon;
   final String textFieldName;
   final String hint;
+  final int maxLines;
+  final int minLines;
+  final double height;
   final TextStyle style;
   final ValueChanged<String> onchangeFunction;
   final TextInputType inputType;
@@ -38,10 +44,13 @@ class TextIputField extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             boxShadow: kTextBoxShadow,
           ),
-          height: 50,
+          height: height,
           child: TextField(
             keyboardType: inputType,
             textInputAction: inputAction,
+            minLines: minLines,
+            maxLines: maxLines,
+            //expands: true,
             style: const TextStyle(
               color: Colors.black87,
             ),

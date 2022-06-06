@@ -52,6 +52,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                         onchangeFunction: (value) {},
                         inputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
+                        style: KLoginTextFieldNameStyle,
                       ),
                       const SizedBox(height: 20),
                       TextIputField(
@@ -61,6 +62,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                         onchangeFunction: (value) {},
                         inputType: TextInputType.number,
                         inputAction: TextInputAction.next,
+                        style: KLoginTextFieldNameStyle,
                       ),
 
                       const SizedBox(height: 20),
