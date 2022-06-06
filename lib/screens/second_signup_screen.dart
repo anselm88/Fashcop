@@ -5,6 +5,7 @@ import 'package:fashcop/widgets/text_input_field.dart';
 import 'package:fashcop/widgets/login_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:fashcop/screens/final_signup_screen.dart';
 
 class SecondSignUpScreen extends StatefulWidget {
   static const String id = 'second_signup_screen';
@@ -199,7 +200,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                       LoginButton(
                           buttonName: 'NEXT',
                           onpress: () {
-                            print('login pressed');
+                            Navigator.pushNamed(context, FinalSignUpScreen.id);
                           }),
                     ],
                   ),

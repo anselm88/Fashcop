@@ -4,7 +4,7 @@ class LoginButton extends StatelessWidget {
   LoginButton({required this.buttonName, required this.onpress});
 
   final String buttonName;
-  final Function onpress;
+  final Function() onpress;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class LoginButton extends StatelessWidget {
         disabledColor: Colors.white,
         color: Colors.white,
         elevation: 5,
-        onPressed: onpress(),
+        onPressed: onpress,
         padding: EdgeInsets.all(15),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),

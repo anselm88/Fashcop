@@ -91,10 +91,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                       LoginButton(
                           buttonName: 'NEXT',
                           onpress: () {
-                            setState(() {
-                              Navigator.pushNamed(
-                                  context, SecondSignUpScreen.id);
-                            });
+                            Navigator.pushNamed(context, SecondSignUpScreen.id);
                           }),
                     ],
                   ),

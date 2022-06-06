@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FashCoP',
       debugShowCheckedModeBanner: false,
-      initialRoute: FinalSignUpScreen.id,
+      initialRoute: LoginScreen.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         FirstSignUpScreen.id: (context) => FirstSignUpScreen(),
