@@ -143,11 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           inputAction: TextInputAction.next),
                       SizedBox(height: 10),
                       buildRememberMe(),
-                      LoginButton(
-                          buttonName: 'LOGIN',
-                          onpress: () {
-                            print('login pressed');
-                          }),
+                      LoginButton(buttonName: 'LOGIN', onpress: () {}),
                       buildSignUpBtn(),
                     ],
                   ),
