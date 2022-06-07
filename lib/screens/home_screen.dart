@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //extendBody: true,
-      //extendBodyBehindAppBar: false,
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
         child: AppBar(
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   bottomRight: Radius.circular(30)),
               gradient: LinearGradient(
                 colors: [
-                  Colors.grey[300]!,
+                  Colors.white30,
                   Colors.white,
                 ],
                 begin: Alignment.topLeft,
