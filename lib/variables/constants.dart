@@ -26,7 +26,7 @@ const kAddProjectTextFieldNameStyle = TextStyle(
 
 const kHeadingStyle = TextStyle(
   color: Color(0xff5ac18e),
-  fontSize: 25,
+  fontSize: 30,
   fontWeight: FontWeight.w700,
 );
 

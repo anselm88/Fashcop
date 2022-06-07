@@ -91,11 +91,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // ignore: prefer_const_constructors
-                      Center(
-                        child: const Text(
-                          "Add A Project",
-                          style: kHeadingStyle,
-                        ),
+                      const Text(
+                        "Add A Project",
+                        style: kAddProjectTextFieldNameStyle,
                       ),
                       const SizedBox(height: 20),
 

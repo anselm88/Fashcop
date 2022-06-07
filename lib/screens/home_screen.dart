@@ -2,6 +2,7 @@ import 'package:fashcop/screens/add_project_screen.dart';
 import 'package:fashcop/screens/favourite_screen.dart';
 import 'package:fashcop/screens/home_page.dart';
 import 'package:fashcop/screens/profile_screen.dart';
+import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -32,6 +33,39 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //extendBody: true,
+      //extendBodyBehindAppBar: false,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30)),
+          ),
+          brightness: Brightness.light,
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30)),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.grey[300]!,
+                  Colors.white,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+          title: const Text(
+            "FaSHcoP",
+            style: kHeadingStyle,
+          ),
+        ),
+      ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: GNav(
         onTabChange: _navBarTapped,
