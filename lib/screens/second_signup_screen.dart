@@ -27,8 +27,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Radio(
-          fillColor:
-              MaterialStateProperty.all<Color?>(Color.fromARGB(66, 0, 0, 0)),
+          fillColor: MaterialStateProperty.all<Color?>(Color(0xff5ac18e)),
           value: gender[btnValue],
           groupValue: select,
           onChanged: (dynamic value) {
@@ -41,7 +40,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
         Text(title,
             style: const TextStyle(
               fontSize: 16,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
             )),
       ],
@@ -124,6 +123,11 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
     });
   }
 
+  final _formKey = GlobalKey<FormState>();
+
+  String? checkFieldEmpty(String? fieldContent) =>
+      fieldContent!.isEmpty ? "Require's an Input" : null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,70 +146,90 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                     horizontal: 25,
                     vertical: 50,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // ignore: prefer_const_constructors
-                      imageProfile(),
-                      const SizedBox(height: 30),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // ignore: prefer_const_constructors
+                        imageProfile(),
+                        const SizedBox(height: 20),
 
-                      TextIputField(
-                        icon: Icons.person,
-                        textFieldName: 'Full Name',
-                        hint: 'Full Name',
-                        onchangeFunction: (value) {},
-                        inputType: TextInputType.name,
-                        inputAction: TextInputAction.next,
-                        style: KLoginTextFieldNameStyle,
-                      ),
-                      const SizedBox(height: 20),
-                      TextIputField(
-                        icon: Icons.calendar_month,
-                        textFieldName: 'Date of Birth',
-                        hint: 'Date of Birth',
-                        onchangeFunction: (value) {},
-                        inputType: TextInputType.datetime,
-                        inputAction: TextInputAction.next,
-                        style: KLoginTextFieldNameStyle,
-                      ),
-                      const SizedBox(height: 20),
-
-                      TextIputField(
-                        icon: Icons.location_city,
-                        textFieldName: 'Location',
-                        hint: 'Region/Town',
-                        onchangeFunction: (value) {},
-                        inputType: TextInputType.text,
-                        inputAction: TextInputAction.done,
-                        style: KLoginTextFieldNameStyle,
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Gender',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                        TextIputField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.person,
+                          textFieldName: 'Full Name',
+                          hint: 'Full Name',
+                          onchangeFunction: (value) {},
+                          inputType: TextInputType.name,
+                          inputAction: TextInputAction.next,
+                          style: KBlackTextFieldNameStyle,
                         ),
-                      ),
+                        const SizedBox(height: 10),
+                        TextIputField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.person,
+                          textFieldName: 'User Name',
+                          hint: 'User Name',
+                          onchangeFunction: (value) {},
+                          inputType: TextInputType.name,
+                          inputAction: TextInputAction.next,
+                          style: KBlackTextFieldNameStyle,
+                        ),
+                        const SizedBox(height: 10),
+                        TextIputField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.calendar_month,
+                          textFieldName: 'Date of Birth',
+                          hint: 'Date of Birth',
+                          onchangeFunction: (value) {},
+                          inputType: TextInputType.datetime,
+                          inputAction: TextInputAction.next,
+                          style: KBlackTextFieldNameStyle,
+                        ),
+                        const SizedBox(height: 10),
 
-                      Row(
-                        children: <Widget>[
-                          addRadioButton(0, 'Male'),
-                          addRadioButton(1, 'Female'),
-                          addRadioButton(2, 'Others'),
-                        ],
-                      ),
+                        TextIputField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.location_city,
+                          textFieldName: 'Location',
+                          hint: 'Region/Town',
+                          onchangeFunction: (value) {},
+                          inputType: TextInputType.text,
+                          inputAction: TextInputAction.done,
+                          style: KBlackTextFieldNameStyle,
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Gender',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
 
-                      const SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            addRadioButton(0, 'Male'),
+                            addRadioButton(1, 'Female'),
+                            addRadioButton(2, 'Others'),
+                          ],
+                        ),
 
-                      LoginButton(
-                          buttonName: 'NEXT',
-                          onpress: () {
-                            Navigator.pushNamed(context, FinalSignUpScreen.id);
-                          }),
-                    ],
+                        const SizedBox(height: 10),
+
+                        LoginButton(
+                            buttonName: 'NEXT',
+                            onpress: () {
+                              if (_formKey.currentState!.validate()) {
+                                Navigator.pushNamed(
+                                    context, FinalSignUpScreen.id);
+                              }
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               )

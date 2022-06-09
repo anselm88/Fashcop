@@ -4,6 +4,7 @@ import 'package:fashcop/screens/home_page.dart';
 import 'package:fashcop/screens/profile_screen.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,22 +35,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //extendBody: true,
-      extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
         child: AppBar(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30)),
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.dark,
           ),
+          shape: const RoundedRectangleBorder(
+              // borderRadius: BorderRadius.only(
+              //     bottomLeft: Radius.circular(30),
+              //     bottomRight: Radius.circular(30)),
+              ),
           brightness: Brightness.light,
           centerTitle: true,
           flexibleSpace: Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30)),
+            decoration: const BoxDecoration(
+              //borderRadius: const BorderRadius.only(
+              //bottomLeft: Radius.circular(30),
+              //bottomRight: Radius.circular(30)),
               gradient: LinearGradient(
                 colors: [
                   Colors.white30,

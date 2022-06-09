@@ -7,6 +7,7 @@ class TextIputField extends StatelessWidget {
       required this.textFieldName,
       required this.hint,
       required this.style,
+      required this.validateFunction,
       required this.onchangeFunction,
       required this.inputType,
       required this.inputAction});
@@ -15,6 +16,7 @@ class TextIputField extends StatelessWidget {
   final String textFieldName;
   final String hint;
   final TextStyle style;
+  final String? Function(String?)? validateFunction;
   final ValueChanged<String> onchangeFunction;
   final TextInputType inputType;
   final TextInputAction inputAction;
@@ -39,26 +41,29 @@ class TextIputField extends StatelessWidget {
             boxShadow: kTextBoxShadow,
           ),
           height: 50,
-          child: TextField(
-            keyboardType: inputType,
-            textInputAction: inputAction,
-            style: const TextStyle(
-              color: Colors.black87,
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14),
-              prefixIcon: Icon(
-                icon,
-                color: Color(0xff5ac18e),
+          child: Center(
+            child: TextFormField(
+              keyboardType: inputType,
+              textInputAction: inputAction,
+              style: const TextStyle(
+                color: Colors.black87,
               ),
-              hintText: hint,
-              hintStyle: const TextStyle(
-                color: Colors.black38,
-                fontSize: 12.0,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(top: 14),
+                prefixIcon: Icon(
+                  icon,
+                  color: Color(0xff5ac18e),
+                ),
+                hintText: hint,
+                hintStyle: const TextStyle(
+                  color: Colors.black38,
+                  fontSize: 12.0,
+                ),
               ),
+              onChanged: onchangeFunction,
+              validator: validateFunction,
             ),
-            onChanged: onchangeFunction,
           ),
         ),
       ],

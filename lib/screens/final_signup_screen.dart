@@ -28,18 +28,20 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
 
   Widget buildSingleCheckBox(CheckBoxState checkBoxState) {
     return Theme(
-      data: ThemeData(unselectedWidgetColor: Colors.white),
+      data: ThemeData(
+        unselectedWidgetColor: Color(0xff5ac18e),
+      ),
       child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         value: checkBoxState.isChecked,
-        checkColor: Colors.green,
-        activeColor: Colors.white,
+        checkColor: Colors.white,
+        activeColor: Color(0xff5ac18e),
         title: Text(
           checkBoxState.title,
           style: const TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
           ),
         ),
         onChanged: (bool? Value) {
@@ -76,8 +78,8 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
                       const Text(
                         "Choose Agro Activities",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
+                          color: Color(0xff5ac18e),
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

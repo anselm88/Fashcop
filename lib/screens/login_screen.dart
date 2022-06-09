@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:fashcop/screens/home_screen.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
 
+  final _formKey = GlobalKey<FormState>();
+
   Widget buildForgotPassBtn() {
     return Container(
       alignment: Alignment.centerRight,
@@ -29,8 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: const Text(
           'Forgot Password?',
           style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
@@ -43,11 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Row(
         children: [
           Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
+            data: ThemeData(unselectedWidgetColor: Color(0xff5ac18e)),
             child: Checkbox(
               value: isRememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
+              checkColor: Colors.white,
+              activeColor: Color(0xff5ac18e),
               onChanged: (bool? Value) {
                 setState(() {
                   isRememberMe = Value!;
@@ -58,8 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
           const Text(
             'Remember me',
             style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
             ),
           )
         ],
@@ -75,20 +80,23 @@ class _LoginScreenState extends State<LoginScreen> {
           TextSpan(
               text: 'Don\'t have an Account?',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               )),
           TextSpan(
               text: 'Sign Up',
               style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.bold))
         ]),
       ),
     );
   }
+
+  String? checkFieldEmpty(String? fieldContent) =>
+      fieldContent!.isEmpty ? "Require's an input" : null;
 
   @override
   Widget build(BuildContext context) {
@@ -108,46 +116,64 @@ class _LoginScreenState extends State<LoginScreen> {
                     horizontal: 25,
                     vertical: 120,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // ignore: prefer_const_constructors
-                      Text(
-                        'Log In',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 50),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // ignore: prefer_const_constructors
+                        Text(
+                          'Log In',
+                          style: const TextStyle(
+                              color: Color(0xff5ac18e),
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 50),
 
-                      TextIputField(
-                        icon: Icons.email,
-                        textFieldName: 'Email',
-                        hint: 'Email',
-                        onchangeFunction: (value) {
-                          print(value);
-                        },
-                        inputType: TextInputType.emailAddress,
-                        inputAction: TextInputAction.next,
-                        style: KLoginTextFieldNameStyle,
-                      ),
-                      const SizedBox(height: 20),
-
-                      PasswordField(
-                          icon: Icons.lock,
-                          passwordFieldName: 'Password',
-                          hint: 'Password',
+                        TextIputField(
+                          icon: Icons.email,
+                          textFieldName: 'Email',
+                          hint: 'Email',
                           onchangeFunction: (value) {
                             print(value);
                           },
-                          inputType: TextInputType.name,
-                          inputAction: TextInputAction.next),
-                      SizedBox(height: 10),
-                      buildRememberMe(),
-                      LoginButton(buttonName: 'LOGIN', onpress: () {}),
-                      buildSignUpBtn(),
-                    ],
+                          validateFunction: checkFieldEmpty,
+                          inputType: TextInputType.emailAddress,
+                          inputAction: TextInputAction.next,
+                          style: KBlackTextFieldNameStyle,
+                        ),
+                        const SizedBox(height: 20),
+
+                        PasswordField(
+                            validateFunction: checkFieldEmpty,
+                            icon: Icons.lock,
+                            passwordFieldName: 'Password',
+                            hint: 'Password',
+                            onchangeFunction: (value) {
+                              print(value);
+                            },
+                            inputType: TextInputType.name,
+                            inputAction: TextInputAction.next),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildRememberMe(),
+                            buildForgotPassBtn(),
+                          ],
+                        ),
+
+                        LoginButton(
+                            buttonName: 'LOGIN',
+                            onpress: () {
+                              if (_formKey.currentState!.validate()) {
+                                // TODO submit
+                              }
+                            }),
+                        buildSignUpBtn(),
+                      ],
+                    ),
                   ),
                 ),
               )

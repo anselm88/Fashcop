@@ -12,8 +12,8 @@ class LoginButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 25),
       width: double.infinity,
       child: RaisedButton(
-        disabledColor: Colors.white,
-        color: Colors.white,
+        disabledColor: Color(0xff5ac18e),
+        color: Color(0xff5ac18e),
         elevation: 5,
         onPressed: onpress,
         padding: EdgeInsets.all(15),
@@ -23,7 +23,7 @@ class LoginButton extends StatelessWidget {
         child: Text(
           buttonName,
           style: TextStyle(
-            color: Color(0xff5ac18e),
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),

@@ -1,3 +1,4 @@
+import 'package:fashcop/widgets/project_card.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SingleChildScrollView(
       physics: AlwaysScrollableScrollPhysics(),
       child: Container(
-        decoration: BoxDecoration(color: Colors.grey[400]),
+        decoration: BoxDecoration(color: Colors.grey[200]),
         child: Column(
           children: [
             Container(
@@ -30,36 +31,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           backgroundImage: AssetImage('assets/profile1.png'),
                         ),
                         SizedBox(width: 40),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'johndoe',
-                              style: TextStyle(
-                                fontSize: 30,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            OutlinedButton(
-                              onPressed: () {},
-                              style: OutlinedButton.styleFrom(
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                minimumSize: Size(0, 30),
-                                side: BorderSide(
-                                  color: Colors.grey[400]!,
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'johndoe',
+                                style: TextStyle(
+                                  fontSize: 30,
                                 ),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 50),
-                                child: Text(
-                                  "Edit Profile",
-                                  style: TextStyle(
-                                    color: Colors.black,
+                              SizedBox(height: 10),
+                              OutlinedButton(
+                                onPressed: () {},
+                                style: OutlinedButton.styleFrom(
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  minimumSize: Size(0, 30),
+                                  side: BorderSide(
+                                    color: Colors.grey[400]!,
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 30),
+                                  child: Text(
+                                    "Edit Profile",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -84,26 +88,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             Container(
-              height: 50,
-              width: 100,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Text('JohnDoe@gmail.com',
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-            SizedBox(height: 10),
-            Container(
-              height: 50,
-              width: 100,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Text('JohnDoe@gmail.com',
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
+                child: ProjectCard(
+              userName: 'John Doe',
+              projectLocation: 'NorthWest, Bamenda',
+              userImagePath: 'assets/profile1.png',
+              briefDescription: 'This project is all about....',
+              projectImagePath: 'assets/corn.jpg',
+              userEmail: 'johndoe@email.com',
+              projectName: 'Corn Production',
+              numberOfLikes: 0,
+              numberOfComments: 0,
+              onUserName: () {},
+              onProjectImage: () {},
+              onLike: () {},
+              onComment: () {},
+            )),
           ],
         ),
       ),

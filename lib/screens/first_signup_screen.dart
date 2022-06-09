@@ -14,6 +14,11 @@ class FirstSignUpScreen extends StatefulWidget {
 }
 
 class _FirstSignUpScreen extends State<FirstSignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  String? checkFieldEmpty(String? fieldContent) =>
+      fieldContent!.isEmpty ? 'Requires a value' : null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,70 +37,84 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                     horizontal: 25,
                     vertical: 120,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // ignore: prefer_const_constructors
-                      Text(
-                        'Sign Up',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 30),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // ignore: prefer_const_constructors
+                        Text(
+                          'Sign Up',
+                          style: const TextStyle(
+                              color: Color(0xff5ac18e),
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 30),
 
-                      TextIputField(
-                        icon: Icons.email,
-                        textFieldName: 'Email',
-                        hint: 'Email',
-                        onchangeFunction: (value) {},
-                        inputType: TextInputType.emailAddress,
-                        inputAction: TextInputAction.next,
-                        style: KLoginTextFieldNameStyle,
-                      ),
-                      const SizedBox(height: 20),
-                      TextIputField(
-                        icon: Icons.phone,
-                        textFieldName: 'Phone Number',
-                        hint: 'Phone Number',
-                        onchangeFunction: (value) {},
-                        inputType: TextInputType.number,
-                        inputAction: TextInputAction.next,
-                        style: KLoginTextFieldNameStyle,
-                      ),
+                        TextIputField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.email,
+                          textFieldName: 'Email',
+                          hint: 'Email',
+                          onchangeFunction: (value) {
+                            print(value);
+                          },
+                          inputType: TextInputType.emailAddress,
+                          inputAction: TextInputAction.next,
+                          style: KBlackTextFieldNameStyle,
+                        ),
+                        const SizedBox(height: 20),
+                        TextIputField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.phone,
+                          textFieldName: 'Phone Number',
+                          hint: 'Phone Number',
+                          onchangeFunction: (value) {},
+                          inputType: TextInputType.number,
+                          inputAction: TextInputAction.next,
+                          style: KBlackTextFieldNameStyle,
+                        ),
 
-                      const SizedBox(height: 20),
+                        const SizedBox(height: 20),
 
-                      PasswordField(
-                        icon: Icons.lock,
-                        passwordFieldName: 'Password',
-                        hint: 'Password',
-                        onchangeFunction: (value) {
-                          print(value);
-                        },
-                        inputType: TextInputType.name,
-                        inputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: 20),
-                      PasswordField(
-                        icon: Icons.lock,
-                        passwordFieldName: 'Confirm Password',
-                        hint: 'Confirm Password',
-                        onchangeFunction: (value) {
-                          print(value);
-                        },
-                        inputType: TextInputType.name,
-                        inputAction: TextInputAction.done,
-                      ),
-                      SizedBox(height: 10),
+                        PasswordField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.lock,
+                          passwordFieldName: 'Password',
+                          hint: 'Password',
+                          onchangeFunction: (value) {
+                            print(value);
+                          },
+                          inputType: TextInputType.name,
+                          inputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 20),
+                        PasswordField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.lock,
+                          passwordFieldName: 'Confirm Password',
+                          hint: 'Confirm Password',
+                          onchangeFunction: (value) {
+                            print(value);
+                          },
+                          inputType: TextInputType.name,
+                          inputAction: TextInputAction.done,
+                        ),
+                        SizedBox(height: 10),
 
-                      LoginButton(
-                          buttonName: 'NEXT',
-                          onpress: () {
-                            Navigator.pushNamed(context, SecondSignUpScreen.id);
-                          }),
-                    ],
+                        LoginButton(
+                            buttonName: 'NEXT',
+                            onpress: () {
+                              setState(() {
+                                if (_formKey.currentState!.validate()) {
+                                  Navigator.pushNamed(
+                                      context, SecondSignUpScreen.id);
+                                }
+                              });
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               )

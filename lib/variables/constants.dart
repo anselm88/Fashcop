@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kBackgroundcolour = BoxDecoration(
-  gradient: LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0x665ac18e),
-        Color(0x995ac18e),
-        Color(0xcc5ac18e),
-        Color(0xff5ac18e),
-      ]),
+  color: Colors.white,
 );
 
 const KLoginTextFieldNameStyle = TextStyle(
@@ -18,8 +10,14 @@ const KLoginTextFieldNameStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const KBlackTextFieldNameStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+);
+
 const kAddProjectTextFieldNameStyle = TextStyle(
-  color: Color(0xff5ac18e),
+  color: Colors.black,
   fontSize: 16,
   fontWeight: FontWeight.bold,
 );

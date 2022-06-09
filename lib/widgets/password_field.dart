@@ -5,12 +5,14 @@ class PasswordField extends StatelessWidget {
       {required this.icon,
       required this.passwordFieldName,
       required this.hint,
+      required this.validateFunction,
       required this.onchangeFunction,
       required this.inputType,
       required this.inputAction});
   final IconData icon;
   final String passwordFieldName;
   final String hint;
+  final String? Function(String?)? validateFunction;
   final ValueChanged<String> onchangeFunction;
   final TextInputType inputType;
   final TextInputAction inputAction;
@@ -22,7 +24,7 @@ class PasswordField extends StatelessWidget {
         Text(
           passwordFieldName,
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -39,8 +41,8 @@ class PasswordField extends StatelessWidget {
                 const BoxShadow(
                     color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
               ]),
-          height: 60,
-          child: TextField(
+          height: 50,
+          child: TextFormField(
             keyboardType: inputType,
             textInputAction: inputAction,
             obscureText: true,
@@ -59,6 +61,7 @@ class PasswordField extends StatelessWidget {
                   color: Colors.black38,
                 )),
             onChanged: onchangeFunction,
+            validator: validateFunction,
           ),
         ),
       ],

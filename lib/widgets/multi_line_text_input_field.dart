@@ -10,6 +10,7 @@ class MultiLineTextInputField extends StatelessWidget {
       required this.minLines,
       required this.height,
       required this.style,
+      required this.validateFunction,
       required this.onchangeFunction,
       required this.inputType,
       required this.inputAction});
@@ -21,6 +22,7 @@ class MultiLineTextInputField extends StatelessWidget {
   final int minLines;
   final double height;
   final TextStyle style;
+  final String? Function(String?)? validateFunction;
   final ValueChanged<String> onchangeFunction;
   final TextInputType inputType;
   final TextInputAction inputAction;
@@ -45,7 +47,7 @@ class MultiLineTextInputField extends StatelessWidget {
             boxShadow: kTextBoxShadow,
           ),
           height: height,
-          child: TextField(
+          child: TextFormField(
             keyboardType: inputType,
             textInputAction: inputAction,
             minLines: minLines,
@@ -68,6 +70,7 @@ class MultiLineTextInputField extends StatelessWidget {
               ),
             ),
             onChanged: onchangeFunction,
+            validator: validateFunction,
           ),
         ),
       ],
