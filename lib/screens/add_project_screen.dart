@@ -110,6 +110,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           style: kAddProjectTextFieldNameStyle,
                         ),
                         const SizedBox(height: 20),
+                        TextIputField(
+                          validateFunction: checkFieldEmpty,
+                          icon: Icons.location_city,
+                          textFieldName: 'Project Name',
+                          hint: 'Whats the name of your project?',
+                          onchangeFunction: (value) {},
+                          inputType: TextInputType.text,
+                          inputAction: TextInputAction.done,
+                          style: kAddProjectTextFieldNameStyle,
+                        ),
+                        const SizedBox(height: 10),
 
                         TextIputField(
                           validateFunction: checkFieldEmpty,
