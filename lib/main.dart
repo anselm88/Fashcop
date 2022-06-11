@@ -6,6 +6,7 @@ import 'package:fashcop/screens/login_screen.dart';
 import 'package:fashcop/screens/first_signup_screen.dart';
 import 'package:fashcop/screens/second_signup_screen.dart';
 import 'package:fashcop/screens/final_signup_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   runApp(MyApp());
