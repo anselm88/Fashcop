@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
             briefDescription: 'This project is all about....',
             projectImagePath: 'assets/corn.jpg',
             userEmail: 'johndoe@email.com',
-            projectName: 'Corn Production',
+            projectName: 'Corn Productions',
             numberOfLikes: 0,
             numberOfComments: 0,
             onUserName: () {},

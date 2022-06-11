@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.black45,
         tabs: [
           GButton(icon: Icons.home, text: 'Home'),
-          GButton(icon: Icons.favorite_border, text: 'Favorites'),
+          GButton(icon: Icons.favorite_border, text: 'Favorite'),
           GButton(icon: Icons.add_rounded, text: 'Add'),
           GButton(icon: Icons.person, text: 'Profile'),
         ],
