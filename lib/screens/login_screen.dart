@@ -98,6 +98,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String? checkFieldEmpty(String? fieldContent) =>
       fieldContent!.isEmpty ? "Require's an input" : null;
 
+  final passwordControler = TextEditingController();
+  final emailcontroler = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,6 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onchangeFunction: (value) {
                             print(value);
                           },
+                          controller: emailcontroler,
                           validateFunction: checkFieldEmpty,
                           inputType: TextInputType.emailAddress,
                           inputAction: TextInputAction.next,
@@ -153,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onchangeFunction: (value) {
                               print(value);
                             },
+                            controller: passwordControler,
                             inputType: TextInputType.name,
                             inputAction: TextInputAction.next),
                         SizedBox(height: 10),

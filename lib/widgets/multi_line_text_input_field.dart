@@ -12,6 +12,7 @@ class MultiLineTextInputField extends StatelessWidget {
       required this.style,
       required this.validateFunction,
       required this.onchangeFunction,
+      required this.controller,
       required this.inputType,
       required this.inputAction});
 
@@ -24,6 +25,7 @@ class MultiLineTextInputField extends StatelessWidget {
   final TextStyle style;
   final String? Function(String?)? validateFunction;
   final ValueChanged<String> onchangeFunction;
+  final TextEditingController controller;
   final TextInputType inputType;
   final TextInputAction inputAction;
 
@@ -71,6 +73,7 @@ class MultiLineTextInputField extends StatelessWidget {
             ),
             onChanged: onchangeFunction,
             validator: validateFunction,
+            controller: controller,
           ),
         ),
       ],

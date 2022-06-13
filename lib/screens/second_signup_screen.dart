@@ -15,8 +15,8 @@ class SecondSignUpScreen extends StatefulWidget {
 }
 
 class _SecondSignUpScreen extends State<SecondSignUpScreen> {
-  PickedFile? _imageFile;
-  final ImagePicker _picker = ImagePicker();
+  File? _imageFile;
+  final _picker = ImagePicker();
 
   List gender = ["Male", "Female", "Other"];
 
@@ -51,10 +51,12 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
     return Center(
       child: Stack(
         children: [
-          const CircleAvatar(
-              radius: 80.0, backgroundImage: AssetImage("assets/profile1.png")
-              //backgroundImage: _imageFile==null? const AssetImage("assets/profile1.png"): FileImage(File(_imageFile?.path)),
-              ),
+          CircleAvatar(
+            radius: 80.0,
+            backgroundImage: this._imageFile == null
+                ? const AssetImage("assets/profile1.png") as ImageProvider
+                : FileImage(this._imageFile!),
+          ),
           Positioned(
             bottom: 20.0,
             right: 20.0,
@@ -98,14 +100,14 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
           children: [
             FlatButton.icon(
               onPressed: () {
-                takePhoto(ImageSource.camera);
+                _takePhotoFromCamera();
               },
               icon: Icon(Icons.camera),
               label: Text("Camera"),
             ),
             FlatButton.icon(
               onPressed: () {
-                takePhoto(ImageSource.gallery);
+                _takePhotoFromGallery();
               },
               icon: Icon(Icons.image),
               label: Text("Gallery"),
@@ -116,14 +118,23 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
     );
   }
 
-  void takePhoto(ImageSource source) async {
-    final pickedFile = await _picker.getImage(source: source);
-    setState(() {
-      _imageFile = pickedFile;
-    });
+  Future<void> _takePhotoFromCamera() async {
+    final PickedFile? pickedFile =
+        await _picker.getImage(source: ImageSource.camera);
+    setState(() => this._imageFile = File(pickedFile!.path));
+  }
+
+  Future<void> _takePhotoFromGallery() async {
+    final PickedFile? pickedFile =
+        await _picker.getImage(source: ImageSource.gallery);
+    setState(() => this._imageFile = File(pickedFile!.path));
   }
 
   final _formKey = GlobalKey<FormState>();
+  final fullNamecontroller = TextEditingController();
+  final userNamecontroller = TextEditingController();
+  final dateOfBirthController = TextEditingController();
+  final locationController = TextEditingController();
 
   String? checkFieldEmpty(String? fieldContent) =>
       fieldContent!.isEmpty ? "Require's an Input" : null;
@@ -162,6 +173,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           textFieldName: 'Full Name',
                           hint: 'Full Name',
                           onchangeFunction: (value) {},
+                          controller: fullNamecontroller,
                           inputType: TextInputType.name,
                           inputAction: TextInputAction.next,
                           style: KBlackTextFieldNameStyle,
@@ -173,6 +185,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           textFieldName: 'User Name',
                           hint: 'User Name',
                           onchangeFunction: (value) {},
+                          controller: userNamecontroller,
                           inputType: TextInputType.name,
                           inputAction: TextInputAction.next,
                           style: KBlackTextFieldNameStyle,
@@ -184,6 +197,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           textFieldName: 'Date of Birth',
                           hint: 'Date of Birth',
                           onchangeFunction: (value) {},
+                          controller: dateOfBirthController,
                           inputType: TextInputType.datetime,
                           inputAction: TextInputAction.next,
                           style: KBlackTextFieldNameStyle,
@@ -196,6 +210,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           textFieldName: 'Location',
                           hint: 'Region/Town',
                           onchangeFunction: (value) {},
+                          controller: locationController,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           style: KBlackTextFieldNameStyle,

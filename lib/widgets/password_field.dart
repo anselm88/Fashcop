@@ -7,6 +7,7 @@ class PasswordField extends StatelessWidget {
       required this.hint,
       required this.validateFunction,
       required this.onchangeFunction,
+      required this.controller,
       required this.inputType,
       required this.inputAction});
   final IconData icon;
@@ -14,6 +15,7 @@ class PasswordField extends StatelessWidget {
   final String hint;
   final String? Function(String?)? validateFunction;
   final ValueChanged<String> onchangeFunction;
+  final TextEditingController controller;
   final TextInputType inputType;
   final TextInputAction inputAction;
   @override
@@ -62,6 +64,7 @@ class PasswordField extends StatelessWidget {
                 )),
             onChanged: onchangeFunction,
             validator: validateFunction,
+            controller: controller,
           ),
         ),
       ],

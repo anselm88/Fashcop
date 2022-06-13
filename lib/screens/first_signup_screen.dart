@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,36 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
 
   String? checkFieldEmpty(String? fieldContent) =>
       fieldContent!.isEmpty ? 'Requires a value' : null;
+
+  String? confirmPasswordValidator(String? confirmPasswordText) {
+    if (confirmPasswordController == null ||
+        confirmPasswordText!.trim().isEmpty) {
+      return 'Reguires a value';
+    }
+    if (passwordControler.text != confirmPasswordText) {
+      return "Passwords don't match";
+    }
+    return null;
+  }
+
+  final passwordControler = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final emailControler = TextEditingController();
+  final phoneNumberControler = TextEditingController();
+
+  var loading = false;
+
+  Future signUp() async {
+    setState(() {
+      loading = true;
+    });
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailControler.text, password: passwordControler.text);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +91,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                           onchangeFunction: (value) {
                             print(value);
                           },
+                          controller: emailControler,
                           inputType: TextInputType.emailAddress,
                           inputAction: TextInputAction.next,
                           style: KBlackTextFieldNameStyle,
@@ -71,6 +103,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                           textFieldName: 'Phone Number',
                           hint: 'Phone Number',
                           onchangeFunction: (value) {},
+                          controller: phoneNumberControler,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
                           style: KBlackTextFieldNameStyle,
@@ -86,18 +119,20 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                           onchangeFunction: (value) {
                             print(value);
                           },
+                          controller: passwordControler,
                           inputType: TextInputType.name,
                           inputAction: TextInputAction.next,
                         ),
                         const SizedBox(height: 20),
                         PasswordField(
-                          validateFunction: checkFieldEmpty,
+                          validateFunction: confirmPasswordValidator,
                           icon: Icons.lock,
                           passwordFieldName: 'Confirm Password',
                           hint: 'Confirm Password',
                           onchangeFunction: (value) {
                             print(value);
                           },
+                          controller: confirmPasswordController,
                           inputType: TextInputType.name,
                           inputAction: TextInputAction.done,
                         ),
@@ -108,6 +143,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                             onpress: () {
                               setState(() {
                                 if (_formKey.currentState!.validate()) {
+                                  signUp();
                                   Navigator.pushNamed(
                                       context, SecondSignUpScreen.id);
                                 }

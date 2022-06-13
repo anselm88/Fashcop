@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ class TextIputField extends StatelessWidget {
       required this.style,
       required this.validateFunction,
       required this.onchangeFunction,
+      required this.controller,
       required this.inputType,
       required this.inputAction});
 
@@ -18,6 +21,7 @@ class TextIputField extends StatelessWidget {
   final TextStyle style;
   final String? Function(String?)? validateFunction;
   final ValueChanged<String> onchangeFunction;
+  final TextEditingController controller;
   final TextInputType inputType;
   final TextInputAction inputAction;
 
@@ -63,6 +67,7 @@ class TextIputField extends StatelessWidget {
               ),
               onChanged: onchangeFunction,
               validator: validateFunction,
+              controller: controller,
             ),
           ),
         ),

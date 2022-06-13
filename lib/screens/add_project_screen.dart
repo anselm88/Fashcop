@@ -78,6 +78,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final projectNameController = TextEditingController();
+  final projectLocationController = TextEditingController();
+  final budjetrangeController = TextEditingController();
+  final estimatedProfitController = TextEditingController();
+  final briefDescriptionController = TextEditingController();
+  final descriptionController = TextEditingController();
+
   String? checkFieldEmpty(String? fieldContent) =>
       fieldContent!.isEmpty ? "Require's an Input" : null;
 
@@ -116,6 +123,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           textFieldName: 'Project Name',
                           hint: 'Whats the name of your project?',
                           onchangeFunction: (value) {},
+                          controller: projectNameController,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           style: kAddProjectTextFieldNameStyle,
@@ -128,6 +136,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           textFieldName: 'Location of Project',
                           hint: 'Region/Town',
                           onchangeFunction: (value) {},
+                          controller: projectLocationController,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           style: kAddProjectTextFieldNameStyle,
@@ -139,6 +148,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           textFieldName: 'Budget Rnage',
                           hint: 'Enter the budget range. e.g 50000-100000FCFA',
                           onchangeFunction: (value) {},
+                          controller: budjetrangeController,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
                           style: kAddProjectTextFieldNameStyle,
@@ -151,6 +161,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           textFieldName: 'Estimated Profits',
                           hint: 'How much can you return as profits?',
                           onchangeFunction: (value) {},
+                          controller: estimatedProfitController,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
                           style: kAddProjectTextFieldNameStyle,
@@ -188,6 +199,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           height: 100.00,
                           style: kAddProjectTextFieldNameStyle,
                           onchangeFunction: (value) {},
+                          controller: briefDescriptionController,
                           inputType: TextInputType.multiline,
                           inputAction: TextInputAction.newline,
                         ),
@@ -202,6 +214,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           height: 200.00,
                           style: kAddProjectTextFieldNameStyle,
                           onchangeFunction: (value) {},
+                          controller: descriptionController,
                           inputType: TextInputType.multiline,
                           inputAction: TextInputAction.newline,
                         ),
