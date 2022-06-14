@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fashcop/components/signup_data.dart';
+import 'package:fashcop/screens/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +9,7 @@ import 'package:fashcop/widgets/text_input_field.dart';
 import 'package:fashcop/widgets/login_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fashcop/models/checkbox_state.dart';
+import 'package:provider/provider.dart';
 
 class FinalSignUpScreen extends StatefulWidget {
   static const String id = 'final_signup_screen';
@@ -14,8 +19,7 @@ class FinalSignUpScreen extends StatefulWidget {
 }
 
 class _FinalSignUpScreen extends State<FinalSignUpScreen> {
-  bool isRememberMe = false;
-
+  final _auth = FirebaseAuth.instance;
   final agroActivities = [
     CheckBoxState(title: "Cultivation and growing of crops"),
     CheckBoxState(title: "Rearing of livestock"),
@@ -25,6 +29,9 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
     CheckBoxState(title: "Rearing of snail/Heliculture"),
     CheckBoxState(title: "Apiculture/bee keeping"),
   ];
+
+  final _formKey = GlobalKey<FormState>();
+  final List<String> selectedAgroActivities = [];
 
   Widget buildSingleCheckBox(CheckBoxState checkBoxState) {
     return Theme(
@@ -47,6 +54,7 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
         onChanged: (bool? Value) {
           setState(() {
             checkBoxState.isChecked = Value!;
+            selectedAgroActivities.add(checkBoxState.isChecked.toString());
           });
         },
       ),
@@ -88,11 +96,81 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
 
                       // ignore: prefer_const_constructors
 
-                      LoginButton(
-                          buttonName: 'FINISH',
-                          onpress: () {
-                            print('login pressed');
-                          }),
+                      Form(
+                        key: _formKey,
+                        child: LoginButton(
+                            buttonName: 'FINISH',
+                            onpress: () async {
+                              _formKey.currentState!.save();
+                              try {
+                                setState(() {
+                                  Provider.of<SignupFormData>(context,
+                                          listen: false)
+                                      .agroActivity = selectedAgroActivities;
+                                });
+
+                                UserCredential newUser =
+                                    await _auth.createUserWithEmailAndPassword(
+                                  email: Provider.of<SignupFormData>(context,
+                                          listen: false)
+                                      .email,
+                                  password: Provider.of<SignupFormData>(context,
+                                          listen: false)
+                                      .password,
+                                );
+                                User? aUser = newUser.user;
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(aUser!.uid)
+                                    .set({
+                                  'fullName': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .fullName,
+                                  'userName': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .userName,
+                                  'email': Provider.of<SignupFormData>(context,
+                                          listen: false)
+                                      .email,
+                                  'dateofBirth': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .dateofBirth,
+                                  'location': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .location,
+                                  'phoneNumber': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .phoneNumber,
+                                  'gender': Provider.of<SignupFormData>(context,
+                                          listen: false)
+                                      .gender,
+                                  'profileImage': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .profileImage,
+                                  'agroActivity': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .agroActivity,
+                                });
+                                Navigator.pushNamed(context, HomeScreen.id);
+                              } on FirebaseAuthException catch (e) {
+                                if (e.code == 'weak-password') {
+                                  print('The password provided is too weak.');
+                                } else if (e.code == 'email-already-in-use') {
+                                  print(
+                                      'The account already exists for that email.');
+                                }
+                              } catch (e) {
+                                print(e);
+                              }
+                            }),
+                      ),
                     ],
                   ),
                 ),

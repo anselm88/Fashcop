@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/material.dart';
 

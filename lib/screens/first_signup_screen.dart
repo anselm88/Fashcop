@@ -1,3 +1,4 @@
+import 'package:fashcop/components/signup_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fashcop/variables/constants.dart';
@@ -6,6 +7,7 @@ import 'package:fashcop/widgets/text_input_field.dart';
 import 'package:fashcop/widgets/password_field.dart';
 import 'package:fashcop/widgets/login_button.dart';
 import 'package:fashcop/screens/second_signup_screen.dart';
+import 'package:provider/provider.dart';
 
 class FirstSignUpScreen extends StatefulWidget {
   static const String id = 'first_signup_screen';
@@ -36,19 +38,9 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
   final emailControler = TextEditingController();
   final phoneNumberControler = TextEditingController();
 
-  var loading = false;
+  late String password, email, phoneNumber;
 
-  Future signUp() async {
-    setState(() {
-      loading = true;
-    });
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailControler.text, password: passwordControler.text);
-    } catch (e) {
-      print(e);
-    }
-  }
+  var loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +81,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                           textFieldName: 'Email',
                           hint: 'Email',
                           onchangeFunction: (value) {
-                            print(value);
+                            email = value;
                           },
                           controller: emailControler,
                           inputType: TextInputType.emailAddress,
@@ -102,7 +94,9 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                           icon: Icons.phone,
                           textFieldName: 'Phone Number',
                           hint: 'Phone Number',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            phoneNumber = value;
+                          },
                           controller: phoneNumberControler,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
@@ -117,7 +111,7 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                           passwordFieldName: 'Password',
                           hint: 'Password',
                           onchangeFunction: (value) {
-                            print(value);
+                            password = value;
                           },
                           controller: passwordControler,
                           inputType: TextInputType.name,
@@ -141,13 +135,25 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                         LoginButton(
                             buttonName: 'NEXT',
                             onpress: () {
-                              setState(() {
-                                if (_formKey.currentState!.validate()) {
-                                  signUp();
+                              if (_formKey.currentState!.validate()) {
+                                try {
+                                  setState(() {
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .email = email;
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .phoneNumber = phoneNumber;
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .password = password;
+                                  });
                                   Navigator.pushNamed(
                                       context, SecondSignUpScreen.id);
+                                } catch (e) {
+                                  print(e);
                                 }
-                              });
+                              }
                             }),
                       ],
                     ),

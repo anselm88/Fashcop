@@ -1,3 +1,4 @@
+import 'package:fashcop/components/signup_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'package:fashcop/widgets/login_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fashcop/screens/final_signup_screen.dart';
+import 'package:provider/provider.dart';
 
 class SecondSignUpScreen extends StatefulWidget {
   static const String id = 'second_signup_screen';
@@ -20,7 +22,7 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
 
   List gender = ["Male", "Female", "Other"];
 
-  String? select;
+  String? selectGender;
 
   Row addRadioButton(int btnValue, String title) {
     return Row(
@@ -29,11 +31,10 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
         Radio(
           fillColor: MaterialStateProperty.all<Color?>(Color(0xff5ac18e)),
           value: gender[btnValue],
-          groupValue: select,
+          groupValue: selectGender,
           onChanged: (dynamic value) {
             setState(() {
-              print(value);
-              select = value;
+              selectGender = value;
             });
           },
         ),
@@ -136,6 +137,8 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
   final dateOfBirthController = TextEditingController();
   final locationController = TextEditingController();
 
+  late String fullName, userName, dateOfBirth, location;
+
   String? checkFieldEmpty(String? fieldContent) =>
       fieldContent!.isEmpty ? "Require's an Input" : null;
 
@@ -172,7 +175,9 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           icon: Icons.person,
                           textFieldName: 'Full Name',
                           hint: 'Full Name',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            fullName = value;
+                          },
                           controller: fullNamecontroller,
                           inputType: TextInputType.name,
                           inputAction: TextInputAction.next,
@@ -184,7 +189,9 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           icon: Icons.person,
                           textFieldName: 'User Name',
                           hint: 'User Name',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            userName = value;
+                          },
                           controller: userNamecontroller,
                           inputType: TextInputType.name,
                           inputAction: TextInputAction.next,
@@ -196,7 +203,9 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           icon: Icons.calendar_month,
                           textFieldName: 'Date of Birth',
                           hint: 'Date of Birth',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            dateOfBirth = value;
+                          },
                           controller: dateOfBirthController,
                           inputType: TextInputType.datetime,
                           inputAction: TextInputAction.next,
@@ -209,7 +218,9 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                           icon: Icons.location_city,
                           textFieldName: 'Location',
                           hint: 'Region/Town',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            location = value;
+                          },
                           controller: locationController,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
@@ -239,8 +250,32 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                             buttonName: 'NEXT',
                             onpress: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.pushNamed(
-                                    context, FinalSignUpScreen.id);
+                                try {
+                                  setState(() {
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .fullName = fullName;
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .userName = userName;
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .dateofBirth = dateOfBirth;
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .location = location;
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .gender = selectGender;
+                                    // Provider.of<SignupFormData>(context,
+                                    //         listen: false)
+                                    //     .profileImage = _imageFile;
+                                  });
+                                  Navigator.pushNamed(
+                                      context, FinalSignUpScreen.id);
+                                } catch (e) {
+                                  print(e);
+                                }
                               }
                             }),
                       ],
