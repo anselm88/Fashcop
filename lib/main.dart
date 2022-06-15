@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
         title: 'FashCoP',
         debugShowCheckedModeBanner: false,
-        initialRoute: FirstSignUpScreen.id,
+        initialRoute: LoginScreen.id,
         routes: {
           HomeScreen.id: (context) => HomeScreen(),
           LoginScreen.id: (context) => LoginScreen(),

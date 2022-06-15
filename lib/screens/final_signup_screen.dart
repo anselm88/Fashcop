@@ -7,6 +7,7 @@ import 'package:fashcop/variables/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:fashcop/widgets/text_input_field.dart';
 import 'package:fashcop/widgets/login_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fashcop/models/checkbox_state.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
         onChanged: (bool? Value) {
           setState(() {
             checkBoxState.isChecked = Value!;
-            selectedAgroActivities.add(checkBoxState.isChecked.toString());
+            selectedAgroActivities.add(checkBoxState.title);
           });
         },
       ),
@@ -123,6 +124,7 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
                                     .collection('users')
                                     .doc(aUser!.uid)
                                     .set({
+                                  'userId': aUser.uid,
                                   'fullName': Provider.of<SignupFormData>(
                                           context,
                                           listen: false)
@@ -159,15 +161,11 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
                                       .agroActivity,
                                 });
                                 Navigator.pushNamed(context, HomeScreen.id);
-                              } on FirebaseAuthException catch (e) {
-                                if (e.code == 'weak-password') {
-                                  print('The password provided is too weak.');
-                                } else if (e.code == 'email-already-in-use') {
-                                  print(
-                                      'The account already exists for that email.');
-                                }
-                              } catch (e) {
-                                print(e);
+                              } on FirebaseAuthException catch (error) {
+                                Fluttertoast.showToast(
+                                    msg: error.message!,
+                                    gravity: ToastGravity.TOP,
+                                    backgroundColor: Colors.red);
                               }
                             }),
                       ),

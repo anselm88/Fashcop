@@ -1,13 +1,17 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'dart:math';
+
 import 'package:fashcop/screens/home_screen.dart';
 import 'package:fashcop/variables/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fashcop/widgets/text_input_field.dart';
 import 'package:fashcop/widgets/password_field.dart';
 import 'package:fashcop/widgets/login_button.dart';
 import 'package:fashcop/screens/first_signup_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -17,6 +21,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+
+  late String email, password;
+
   bool isRememberMe = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -139,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           textFieldName: 'Email',
                           hint: 'Email',
                           onchangeFunction: (value) {
-                            print(value);
+                            email = value;
                           },
                           controller: emailcontroler,
                           validateFunction: checkFieldEmpty,
@@ -155,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             passwordFieldName: 'Password',
                             hint: 'Password',
                             onchangeFunction: (value) {
-                              print(value);
+                              password = value;
                             },
                             controller: passwordControler,
                             inputType: TextInputType.name,
@@ -171,8 +179,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         LoginButton(
                             buttonName: 'LOGIN',
-                            onpress: () {
+                            onpress: () async {
                               if (_formKey.currentState!.validate()) {
+                                try {
+                                  final loggedInUser =
+                                      await _auth.signInWithEmailAndPassword(
+                                          email: email, password: password);
+
+                                  Navigator.pushNamed(context, HomeScreen.id);
+                                } on FirebaseAuthException catch (error) {
+                                  Fluttertoast.showToast(
+                                      msg: error.message!,
+                                      gravity: ToastGravity.TOP,
+                                      backgroundColor: Colors.red);
+                                }
+
                                 // TODO submit
                               }
                             }),
