@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fashcop/models/add_project_map.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:fashcop/widgets/login_button.dart';
 import 'package:fashcop/widgets/multi_line_text_input_field.dart';
 import 'package:fashcop/widgets/text_input_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +22,16 @@ class AddProductScreen extends StatefulWidget {
 class _AddProductScreenState extends State<AddProductScreen> {
   File? _imageFile;
   final _picker = ImagePicker();
+
+  AddProjectMap _addProjectMap = AddProjectMap();
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  void getCurrentUser() {
+    final User user = auth.currentUser!;
+    final uid = user.uid;
+    // here you write the codes to input the data into firestore
+  }
 
   Widget bottomSheet() {
     return Container(
@@ -122,7 +135,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           icon: Icons.location_city,
                           textFieldName: 'Project Name',
                           hint: 'Whats the name of your project?',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            _addProjectMap.projectName = value;
+                          },
                           controller: projectNameController,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
@@ -135,7 +150,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           icon: Icons.location_city,
                           textFieldName: 'Location of Project',
                           hint: 'Region/Town',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            _addProjectMap.projectLocation = value;
+                          },
                           controller: projectLocationController,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
@@ -147,7 +164,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           icon: Icons.money,
                           textFieldName: 'Budget Rnage',
                           hint: 'Enter the budget range. e.g 50000-100000FCFA',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            _addProjectMap.budgetRange = value;
+                          },
                           controller: budjetrangeController,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
@@ -160,7 +179,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           icon: Icons.money,
                           textFieldName: 'Estimated Profits',
                           hint: 'How much can you return as profits?',
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            _addProjectMap.estimatedProfit = value;
+                          },
                           controller: estimatedProfitController,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
@@ -172,7 +193,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             "Select Sector", dropdownOneValue, (newValue) {
                           setState(() {
                             dropdownOneValue = newValue;
-                            print(dropdownOneValue);
+
+                            _addProjectMap.agroSector = dropdownOneValue;
                           });
                         }),
 
@@ -184,7 +206,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             dropdownTwoValue, (newValue) {
                           setState(() {
                             dropdownTwoValue = newValue;
-                            print(dropdownTwoValue);
+                            _addProjectMap.timeFrame = dropdownTwoValue;
                           });
                         }),
 
@@ -196,9 +218,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           hint: "Enter Brief Project Description",
                           maxLines: 2,
                           minLines: 1,
-                          height: 100.00,
+                          height: 40.00,
                           style: kAddProjectTextFieldNameStyle,
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            _addProjectMap.briefDescription = value;
+                          },
                           controller: briefDescriptionController,
                           inputType: TextInputType.multiline,
                           inputAction: TextInputAction.newline,
@@ -211,9 +235,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           hint: "Enter Detailed Project Description",
                           maxLines: 500,
                           minLines: 1,
-                          height: 200.00,
+                          height: 40.00,
                           style: kAddProjectTextFieldNameStyle,
-                          onchangeFunction: (value) {},
+                          onchangeFunction: (value) {
+                            _addProjectMap.detailedDescription = value;
+                          },
                           controller: descriptionController,
                           inputType: TextInputType.multiline,
                           inputAction: TextInputAction.newline,
@@ -251,7 +277,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                           ),
 
-                        LoginButton(buttonName: 'SUBMIT', onpress: () {}),
+                        LoginButton(
+                            buttonName: 'SUBMIT',
+                            onpress: () async {
+                              final User user = auth.currentUser!;
+                              _addProjectMap.userID = user.uid;
+                              try {
+                                await FirebaseFirestore.instance
+                                    .collection('projectsMap')
+                                    .add(_addProjectMap.toJson());
+                              } catch (e) {
+                                print(e);
+                              }
+                            }),
                       ],
                     ),
                   ),
