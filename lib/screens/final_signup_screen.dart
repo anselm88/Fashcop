@@ -154,7 +154,7 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
                                   'profileImage': Provider.of<SignupFormData>(
                                           context,
                                           listen: false)
-                                      .profileImage,
+                                      .profileImageURL,
                                   'agroActivity': Provider.of<SignupFormData>(
                                           context,
                                           listen: false)

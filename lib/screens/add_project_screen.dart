@@ -7,6 +7,7 @@ import 'package:fashcop/widgets/login_button.dart';
 import 'package:fashcop/widgets/multi_line_text_input_field.dart';
 import 'package:fashcop/widgets/text_input_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,9 @@ class AddProductScreen extends StatefulWidget {
 class _AddProductScreenState extends State<AddProductScreen> {
   File? _imageFile;
   final _picker = ImagePicker();
+
+  FirebaseStorage storage = FirebaseStorage.instance;
+  late String projectImageUrl;
 
   AddProjectMap _addProjectMap = AddProjectMap();
 
@@ -282,6 +286,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             onpress: () async {
                               final User user = auth.currentUser!;
                               _addProjectMap.userID = user.uid;
+
+                              Reference ref = storage.ref().child(
+                                  "projectImage/" + DateTime.now().toString());
+                              UploadTask uploadTask = ref.putFile(_imageFile!);
+                              uploadTask.whenComplete(() async {
+                                projectImageUrl = await ref.getDownloadURL();
+                                print(projectImageUrl);
+                              }).catchError((onError) {
+                                print(onError);
+                              });
+                              _addProjectMap.projectImageURL = projectImageUrl;
+
                               try {
                                 await FirebaseFirestore.instance
                                     .collection('projectsMap')

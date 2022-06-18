@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fashcop/screens/final_signup_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class SecondSignUpScreen extends StatefulWidget {
   static const String id = 'second_signup_screen';
@@ -19,6 +20,8 @@ class SecondSignUpScreen extends StatefulWidget {
 class _SecondSignUpScreen extends State<SecondSignUpScreen> {
   File? _imageFile;
   final _picker = ImagePicker();
+  FirebaseStorage storage = FirebaseStorage.instance;
+  late String profileImageUrl;
 
   List gender = ["Male", "Female", "Other"];
 
@@ -250,6 +253,16 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                             buttonName: 'NEXT',
                             onpress: () {
                               if (_formKey.currentState!.validate()) {
+                                Reference ref = storage.ref().child(
+                                    "profilePics/" + DateTime.now().toString());
+                                UploadTask uploadTask =
+                                    ref.putFile(_imageFile!);
+                                uploadTask.whenComplete(() async {
+                                  profileImageUrl = await ref.getDownloadURL();
+                                  print(profileImageUrl);
+                                }).catchError((onError) {
+                                  print(onError);
+                                });
                                 try {
                                   setState(() {
                                     Provider.of<SignupFormData>(context,
@@ -267,9 +280,9 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                                     Provider.of<SignupFormData>(context,
                                             listen: false)
                                         .gender = selectGender;
-                                    // Provider.of<SignupFormData>(context,
-                                    //         listen: false)
-                                    //     .profileImage = _imageFile;
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .profileImageURL = profileImageUrl;
                                   });
                                   Navigator.pushNamed(
                                       context, FinalSignUpScreen.id);
