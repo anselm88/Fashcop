@@ -48,7 +48,7 @@ class MultiLineTextInputField extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             boxShadow: kTextBoxShadow,
           ),
-          height: height,
+          //height: height,
           child: TextFormField(
             keyboardType: inputType,
             textInputAction: inputAction,

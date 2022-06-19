@@ -222,7 +222,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           hint: "Enter Brief Project Description",
                           maxLines: 2,
                           minLines: 1,
-                          height: 40.00,
+                          height: 50.00,
                           style: kAddProjectTextFieldNameStyle,
                           onchangeFunction: (value) {
                             _addProjectMap.briefDescription = value;
@@ -239,7 +239,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           hint: "Enter Detailed Project Description",
                           maxLines: 500,
                           minLines: 1,
-                          height: 40.00,
+                          height: 50.00,
                           style: kAddProjectTextFieldNameStyle,
                           onchangeFunction: (value) {
                             _addProjectMap.detailedDescription = value;
@@ -297,6 +297,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 print(onError);
                               });
                               _addProjectMap.projectImageURL = projectImageUrl;
+                              _addProjectMap.createdTime = DateTime.now();
 
                               try {
                                 await FirebaseFirestore.instance

@@ -46,14 +46,27 @@ class MyApp extends StatelessWidget {
         ),
         title: 'FashCoP',
         debugShowCheckedModeBanner: false,
-        initialRoute: LoginScreen.id,
+        initialRoute: HomeScreen.id,
         routes: {
           HomeScreen.id: (context) => HomeScreen(),
           LoginScreen.id: (context) => LoginScreen(),
           FirstSignUpScreen.id: (context) => FirstSignUpScreen(),
           SecondSignUpScreen.id: (context) => SecondSignUpScreen(),
           FinalSignUpScreen.id: (context) => FinalSignUpScreen(),
-          SingleProjectScreen.id: (context) => SingleProjectScreen(),
+          //SingleProjectScreen.id: (context) => SingleProjectScreen(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == SingleProjectScreen.id) {
+            final ProductArguments args =
+                settings.arguments as ProductArguments;
+            return MaterialPageRoute(builder: (context) {
+              return SingleProjectScreen(
+                productId: args.productId,
+                userId: args.userId,
+              );
+            });
+          }
+          return null;
         },
       ),
     );

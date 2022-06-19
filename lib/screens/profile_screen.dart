@@ -1,3 +1,4 @@
+import 'package:fashcop/screens/single_project_screen.dart';
 import 'package:fashcop/widgets/project_card.dart';
 import 'package:flutter/material.dart';
 
@@ -96,10 +97,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               userImagePath: 'assets/profile1.png',
               briefDescription: 'This project is all about....',
               projectImagePath: 'assets/corn.jpg',
-              userEmail: 'johndoe@email.com',
+              //userEmail: 'johndoe@email.com',
               projectName: 'Corn Production',
               numberOfLikes: 0,
               numberOfComments: 0,
+              onFullProject: () {
+                Navigator.pushNamed(context, SingleProjectScreen.id);
+              },
               onUserName: () {},
               onProjectImage: () {},
               onLike: () {},
