@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fashcop/screens/another_users_profile.dart';
+import 'package:fashcop/screens/home_page.dart';
 import 'package:fashcop/variables/constants.dart';
+import 'package:fashcop/widgets/custom_app_bar.dart';
 import 'package:fashcop/widgets/project_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,52 +27,9 @@ class _SingleProjectScreenState extends State<SingleProjectScreen> {
       FirebaseFirestore.instance.collection('users').doc(widget.userId);
 
   @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-    print(widget.productId);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness: Brightness.dark,
-          ),
-          shape: const RoundedRectangleBorder(
-              // borderRadius: BorderRadius.only(
-              //     bottomLeft: Radius.circular(30),
-              //     bottomRight: Radius.circular(30)),
-              ),
-          brightness: Brightness.light,
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              //borderRadius: const BorderRadius.only(
-              //bottomLeft: Radius.circular(30),
-              //bottomRight: Radius.circular(30)),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.white30,
-                  Colors.white,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-          ),
-          title: const Text(
-            "FaSHcoP",
-            style: kHeadingStyle,
-          ),
-        ),
-      ),
+      appBar: customAppbar(),
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: FutureBuilder<DocumentSnapshot>(
@@ -127,7 +87,13 @@ class _SingleProjectScreenState extends State<SingleProjectScreen> {
                                               projectData['projectLocation']),
                                           trailing: Icon(Icons.more_horiz),
                                           contentPadding: EdgeInsets.all(0),
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, AnotherUsersProfile.id,
+                                                arguments:
+                                                    ProjectOwnerArguments(
+                                                        projectData['userID']));
+                                          },
                                         ),
                                       ),
                                       GestureDetector(

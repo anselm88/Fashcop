@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fashcop/screens/another_users_profile.dart';
 import 'package:fashcop/screens/single_project_screen.dart';
 import 'package:fashcop/widgets/project_card.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,12 @@ class _HomePageState extends State<HomePage> {
                             arguments: ProductArguments(
                                 projectsList[index].id, projectData['userID']));
                       },
-                      onUserName: () {},
+                      onUserName: () {
+                        Navigator.pushNamed(context, AnotherUsersProfile.id,
+                            arguments:
+                                ProjectOwnerArguments(projectData['userID']));
+                      },
+
                       onProjectImage: () {},
                       onLike: () {},
                       onComment: () {},
@@ -95,4 +101,10 @@ class ProductArguments {
   final String userId;
 
   ProductArguments(this.productId, this.userId);
+}
+
+class ProjectOwnerArguments {
+  final String userId;
+
+  ProjectOwnerArguments(this.userId);
 }

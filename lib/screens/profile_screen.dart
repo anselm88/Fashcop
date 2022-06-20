@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fashcop/screens/single_project_screen.dart';
 import 'package:fashcop/widgets/project_card.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
-
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -94,9 +93,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ProjectCard(
               userName: 'John Doe',
               projectLocation: 'NorthWest, Bamenda',
-              userImagePath: 'assets/profile1.png',
+              userImagePath: '',
               briefDescription: 'This project is all about....',
-              projectImagePath: 'assets/corn.jpg',
+              projectImagePath: '',
               //userEmail: 'johndoe@email.com',
               projectName: 'Corn Production',
               numberOfLikes: 0,

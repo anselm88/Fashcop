@@ -1,6 +1,8 @@
 import 'package:fashcop/components/signup_data.dart';
+import 'package:fashcop/screens/another_users_profile.dart';
 import 'package:fashcop/screens/home_screen.dart';
 import 'package:fashcop/screens/home_page.dart';
+import 'package:fashcop/screens/profile_screen.dart';
 import 'package:fashcop/screens/single_project_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fashcop/screens/login_screen.dart';
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
           FirstSignUpScreen.id: (context) => FirstSignUpScreen(),
           SecondSignUpScreen.id: (context) => SecondSignUpScreen(),
           FinalSignUpScreen.id: (context) => FinalSignUpScreen(),
+          //AnotherUsersProfile.id: (context) => AnotherUsersProfile(),
+          //ProfileScreen.id: (context) => ProfileScreen(),
           //SingleProjectScreen.id: (context) => SingleProjectScreen(),
         },
         onGenerateRoute: (settings) {
@@ -62,6 +66,14 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) {
               return SingleProjectScreen(
                 productId: args.productId,
+                userId: args.userId,
+              );
+            });
+          } else if (settings.name == AnotherUsersProfile.id) {
+            final ProjectOwnerArguments args =
+                settings.arguments as ProjectOwnerArguments;
+            return MaterialPageRoute(builder: (context) {
+              return AnotherUsersProfile(
                 userId: args.userId,
               );
             });
