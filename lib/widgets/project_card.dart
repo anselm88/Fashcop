@@ -67,7 +67,7 @@ class ProjectCard extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: Text(briefDescription),
                   ),
-                  projectImagePath == ""
+                  projectImagePath == null
                       ? const SizedBox()
                       : GestureDetector(
                           onTap: onProjectImage,

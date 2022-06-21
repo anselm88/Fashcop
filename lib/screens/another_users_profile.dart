@@ -28,27 +28,33 @@ class _AnotherUsersProfileState extends State<AnotherUsersProfile> {
   //       .get();
   // }
 
-  // CollectionReference projectRef() => FirebaseFirestore.instance
-  //     .collection('projectsMap').where('userID', isEqualTo: widget.userId).get();
+  late String userName;
+  late String userImageUrl;
 
-  Query<Map<String, dynamic>> projectRef() => FirebaseFirestore.instance
-      .collection('projectsMap')
-      .where('userID', isEqualTo: widget.userId);
+  Future<QuerySnapshot<Map<String, dynamic>>> projectRef() =>
+      FirebaseFirestore.instance
+          .collection('projectsMap')
+          .where('userID', isEqualTo: widget.userId)
+          .get();
 
-  @override
-  void initState() {
-    // TODO: implement initState
+  // Query<Map<String, dynamic>> projectRef() => FirebaseFirestore.instance
+  //     .collection('projectsMap')
+  //     .where('userID', isEqualTo: widget.userId);
 
-    super.initState();
-    print(widget.userId);
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+
+  //   super.initState();
+  //   print(widget.userId);
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(),
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: ClampingScrollPhysics(),
         child: Container(
           decoration: BoxDecoration(color: Colors.grey[200]),
           child: Column(
@@ -62,6 +68,8 @@ class _AnotherUsersProfileState extends State<AnotherUsersProfile> {
                     if (userSnapshot.connectionState == ConnectionState.done) {
                       Map<String, dynamic> userData =
                           userSnapshot.data?.data() as Map<String, dynamic>;
+                      userName = userData['fullName'];
+                      userImageUrl = userData['profileImage'];
 
                       return Container(
                         decoration: BoxDecoration(color: Colors.white),
@@ -104,7 +112,7 @@ class _AnotherUsersProfileState extends State<AnotherUsersProfile> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 30),
                                             child: Text(
-                                              "Edit Profile",
+                                              "Message",
                                               style: TextStyle(
                                                 color: Colors.black,
                                               ),
@@ -145,33 +153,44 @@ class _AnotherUsersProfileState extends State<AnotherUsersProfile> {
                   }),
               SizedBox(height: 5),
               FutureBuilder(
-                  future: projectRef().get(),
+                  future: projectRef(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
                       return Text('Something went wrong');
                     }
+
                     if (snapshot.connectionState == ConnectionState.done) {
                       // Map<String, dynamic> projectData =
-                      //     snapshot.data! as Map<String, dynamic>;
-                      // Text(snapshot.data!.docs.data()['userID'])
-                      return ProjectCard(
-                        userName: 'John Doe',
-                        projectLocation: 'NorthWest, Bamenda',
-                        userImagePath: '',
-                        briefDescription: 'This project is all about....',
-                        projectImagePath: '',
-                        //userEmail: 'johndoe@email.com',
-                        projectName: 'Corn Production',
-                        numberOfLikes: 0,
-                        numberOfComments: 0,
-                        onFullProject: () {
-                          Navigator.pushNamed(context, SingleProjectScreen.id);
-                        },
-                        onUserName: () {},
-                        onProjectImage: () {},
-                        onLike: () {},
-                        onComment: () {},
-                      );
+                      //     snapshot.data!.docs[].data() as Map<String, dynamic>;
+                      List<DocumentSnapshot> projectsList = snapshot.data!.docs;
+                      return ListView.builder(
+                          itemCount: projectsList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            Map<String, dynamic> projectData =
+                                projectsList[index].data()
+                                    as Map<String, dynamic>;
+                            return ProjectCard(
+                              userName: userName,
+                              projectLocation:
+                                  projectData['projectLocation'] ?? '',
+                              userImagePath: userImageUrl,
+                              briefDescription: projectData['briefDescription'],
+                              projectImagePath: projectData['projectImageURL'],
+                              //userEmail: 'johndoe@email.com',
+                              projectName: projectData['projectName'],
+                              numberOfLikes: 0,
+                              numberOfComments: 0,
+                              onFullProject: () {
+                                Navigator.pushNamed(
+                                    context, SingleProjectScreen.id);
+                              },
+                              onUserName: () {},
+                              onProjectImage: () {},
+                              onLike: () {},
+                              onComment: () {},
+                            );
+                          });
                     }
                     return Center(
                       child: CircularProgressIndicator(),

@@ -129,11 +129,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // ignore: prefer_const_constructors
-                        const Text(
-                          "Add A Project",
-                          style: kAddProjectTextFieldNameStyle,
-                        ),
-                        const SizedBox(height: 20),
+                        // const Text(
+                        //   "Add A Project",
+                        //   style: kAddProjectTextFieldNameStyle,
+                        // ),
+                        // const SizedBox(height: 20),
                         TextIputField(
                           validateFunction: checkFieldEmpty,
                           icon: Icons.location_city,
