@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isFavorite = false;
+
   Stream<QuerySnapshot> projectRef =
       FirebaseFirestore.instance.collection('projectsMap').snapshots();
 
@@ -84,7 +86,9 @@ class _HomePageState extends State<HomePage> {
                       onProjectImage: () {},
                       onLike: () {},
                       onComment: () {},
+                      projectId: projectsList[index].id,
                     );
+
                     // Text(
                     //     "Project Name:  posted By: ${userData['fullName']}");
                   });

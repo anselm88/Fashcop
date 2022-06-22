@@ -1,4 +1,5 @@
 import 'package:fashcop/components/signup_data.dart';
+import 'package:fashcop/models/favorite_provider.dart';
 import 'package:fashcop/screens/another_users_profile.dart';
 import 'package:fashcop/screens/home_screen.dart';
 import 'package:fashcop/screens/home_page.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => SignupFormData(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FavoriteProvider(),
         ),
       ],
       child: MaterialApp(

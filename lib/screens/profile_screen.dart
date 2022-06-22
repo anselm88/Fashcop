@@ -174,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onUserName: () {},
                             onProjectImage: () {},
                             onLike: () {},
-                            onComment: () {},
+                            onComment: () {}, projectId: null,
                           );
                         });
                   }

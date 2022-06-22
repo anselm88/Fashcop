@@ -1,8 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fashcop/models/favorite_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ProjectCard extends StatelessWidget {
+class ProjectCard extends StatefulWidget {
+  final projectId;
+  final projectImagePath;
+  final projectName;
+  final projectLocation;
+  final briefDescription;
+  final userImagePath;
+  final userName;
+  final numberOfLikes;
+  final numberOfComments;
+  final Function() onUserName;
+  final Function() onProjectImage;
+  final Function() onFullProject;
+  final onLike;
+  final onComment;
+
   ProjectCard(
-      {required this.userImagePath,
+      {required this.projectId,
+      required this.userImagePath,
       required this.userName,
       required this.projectLocation,
       required this.briefDescription,
@@ -16,17 +36,44 @@ class ProjectCard extends StatelessWidget {
       required this.onLike,
       required this.onFullProject});
 
-  String userImagePath,
-      userName,
-      projectLocation,
-      briefDescription,
-      projectImagePath,
-      projectName;
-  int numberOfLikes, numberOfComments;
-  Function() onUserName, onProjectImage, onLike, onComment, onFullProject;
+  // String userImagePath,
+  //     userName,
+  //     projectLocation,
+  //     briefDescription,
+  //     projectImagePath,
+  //     projectName;
+  // int numberOfLikes, numberOfComments;
+  // Function() onUserName, onProjectImage, onLike, onComment, onFullProject;
+
+  @override
+  State<ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<ProjectCard> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
+    FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
+
+    FirebaseFirestore.instance
+        .collection('favorites')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('userFavorites')
+        .doc(widget.projectId)
+        .get()
+        .then((value) => {
+              if (this.mounted)
+                {
+                  if (value.exists)
+                    {
+                      setState(() {
+                        isFavorite = value.get("projectFavorite");
+                      })
+                    }
+                }
+            });
+
     return Card(
       margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 2.5, bottom: 2.5),
       child: Padding(
@@ -37,46 +84,46 @@ class ProjectCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: ListTile(
-                leading: userImagePath == ""
+                leading: widget.userImagePath == ""
                     ? const CircleAvatar(
                         radius: 20.0,
                         backgroundImage: AssetImage("assets/profile1.png"),
                       )
                     : CircleAvatar(
                         radius: 20.0,
-                        backgroundImage: NetworkImage(userImagePath),
+                        backgroundImage: NetworkImage(widget.userImagePath),
                       ),
                 title: Text(
-                  userName,
+                  widget.userName,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(projectLocation),
+                subtitle: Text(widget.projectLocation),
                 trailing: Icon(Icons.more_horiz),
                 contentPadding: EdgeInsets.all(0),
-                onTap: onUserName,
+                onTap: widget.onUserName,
               ),
             ),
             InkWell(
-              onTap: onFullProject,
+              onTap: widget.onFullProject,
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.all(5.0),
                     width: MediaQuery.of(context).size.width,
-                    child: Text(briefDescription),
+                    child: Text(widget.briefDescription),
                   ),
-                  projectImagePath == null
+                  widget.projectImagePath == null
                       ? const SizedBox()
                       : GestureDetector(
-                          onTap: onProjectImage,
+                          onTap: widget.onProjectImage,
                           child: Container(
                             height: 300,
                             width: double.infinity,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(projectImagePath),
+                                image: NetworkImage(widget.projectImagePath),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -86,7 +133,7 @@ class ProjectCard extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
                     width: MediaQuery.of(context).size.width,
-                    child: Text(projectName,
+                    child: Text(widget.projectName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0,
@@ -101,14 +148,40 @@ class ProjectCard extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: onLike,
-                            icon: const Icon(
-                              Icons.favorite_border,
-                              color: Colors.black54,
+                            onPressed: () {
+                              setState(() {
+                                isFavorite = !isFavorite;
+
+                                if (isFavorite == true) {
+                                  favoriteProvider.favorite(
+                                      projectId: widget.projectId,
+                                      projectImagePath: widget.projectImagePath,
+                                      projectName: widget.projectName,
+                                      projectLocation: widget.projectLocation,
+                                      briefDescription: widget.briefDescription,
+                                      userImagePath: widget.userImagePath,
+                                      userName: widget.userName,
+                                      projectFavorite: true);
+                                } else if (isFavorite == false) {
+                                  FirebaseFirestore.instance
+                                      .collection('favorites')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .collection('userFavorites')
+                                      .doc(widget.projectId)
+                                      .delete();
+                                }
+                              });
+                            },
+                            icon: Icon(
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Color(0xff5ac18e),
                             ),
                           ),
                           Text(
-                            '$numberOfLikes Likes',
+                            '${widget.numberOfLikes} Likes',
                             style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.black54,
@@ -119,12 +192,12 @@ class ProjectCard extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: onComment,
+                            onPressed: widget.onComment,
                             icon: const Icon(Icons.comment_outlined,
-                                color: Colors.black54),
+                                color: Color(0xff5ac18e)),
                           ),
                           Text(
-                            '$numberOfComments Comments',
+                            '${widget.numberOfComments} Comments',
                             style: TextStyle(
                                 fontSize: 16.0, color: Colors.black54),
                           ),
