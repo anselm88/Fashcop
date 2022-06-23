@@ -14,6 +14,7 @@ class ProjectCard extends StatefulWidget {
   final userName;
   final numberOfLikes;
   final numberOfComments;
+  final ownerID;
   final Function() onUserName;
   final Function() onProjectImage;
   final Function() onFullProject;
@@ -24,6 +25,7 @@ class ProjectCard extends StatefulWidget {
       {required this.projectId,
       required this.userImagePath,
       required this.userName,
+      required this.ownerID,
       required this.projectLocation,
       required this.briefDescription,
       required this.projectImagePath,
@@ -161,7 +163,8 @@ class _ProjectCardState extends State<ProjectCard> {
                                       briefDescription: widget.briefDescription,
                                       userImagePath: widget.userImagePath,
                                       userName: widget.userName,
-                                      projectFavorite: true);
+                                      projectFavorite: true,
+                                      ownerId: widget.ownerID);
                                 } else if (isFavorite == false) {
                                   FirebaseFirestore.instance
                                       .collection('favorites')

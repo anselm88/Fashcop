@@ -12,7 +12,8 @@ class FavoriteProvider with ChangeNotifier {
       required briefDescription,
       required userImagePath,
       required userName,
-      required projectFavorite}) {
+      required projectFavorite,
+      required ownerId}) {
     FirebaseFirestore.instance
         .collection('favorites')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -27,6 +28,7 @@ class FavoriteProvider with ChangeNotifier {
       "userImage": userImagePath,
       "userName": userName,
       "projectFavorite": projectFavorite,
+      "ownerId": ownerId
     });
   }
 }

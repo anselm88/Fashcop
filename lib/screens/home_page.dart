@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                       onLike: () {},
                       onComment: () {},
                       projectId: projectsList[index].id,
+                      ownerID: projectData['userID'],
                     );
 
                     // Text(

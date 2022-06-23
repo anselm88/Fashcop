@@ -189,6 +189,7 @@ class _AnotherUsersProfileState extends State<AnotherUsersProfile> {
                               onProjectImage: () {},
                               onLike: () {},
                               onComment: () {}, projectId: null,
+                              ownerID: null,
                             );
                           });
                     }
