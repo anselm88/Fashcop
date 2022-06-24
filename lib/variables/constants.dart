@@ -48,3 +48,5 @@ List timeframeList = [
   "Less than 1 Year",
   "More than 1 Year"
 ];
+
+List accountType = ["FARMER", "INVESTOR"];

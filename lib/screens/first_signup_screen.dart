@@ -1,4 +1,5 @@
 import 'package:fashcop/components/signup_data.dart';
+import 'package:fashcop/models/add_project_map.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fashcop/variables/constants.dart';
@@ -39,8 +40,9 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
   final phoneNumberControler = TextEditingController();
 
   late String password, email, phoneNumber;
-
   var loading = false;
+
+  dynamic dropdownValue = accountType[0];
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +76,51 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 30),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Account Type",
+                              style: kAddProjectTextFieldNameStyle,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: kTextBoxShadow,
+                              ),
+                              height: 50,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: DropdownButton(
+                                  underline: SizedBox(),
+                                  hint: Text(
+                                    "Choose your Account Type",
+                                    style: TextStyle(color: Colors.black38),
+                                  ),
+                                  isExpanded: true,
+                                  value: dropdownValue,
+                                  items: accountType.map((valueItem) {
+                                    return DropdownMenuItem(
+                                      child: Text(valueItem),
+                                      value: valueItem,
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      dropdownValue = newValue;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
 
                         TextIputField(
                           validateFunction: checkFieldEmpty,
@@ -138,6 +185,9 @@ class _FirstSignUpScreen extends State<FirstSignUpScreen> {
                               if (_formKey.currentState!.validate()) {
                                 try {
                                   setState(() {
+                                    Provider.of<SignupFormData>(context,
+                                            listen: false)
+                                        .accountType = dropdownValue;
                                     Provider.of<SignupFormData>(context,
                                             listen: false)
                                         .email = email;

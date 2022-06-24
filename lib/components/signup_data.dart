@@ -9,7 +9,8 @@ class SignupFormData extends ChangeNotifier {
       location,
       gender,
       phoneNumber,
-      profileImageURL;
+      profileImageURL,
+      accountType;
   List<String> agroActivity = [];
   late String email, password;
 }

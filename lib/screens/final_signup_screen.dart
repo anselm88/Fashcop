@@ -159,6 +159,10 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
                                           context,
                                           listen: false)
                                       .agroActivity,
+                                  'accountType': Provider.of<SignupFormData>(
+                                          context,
+                                          listen: false)
+                                      .accountType,
                                 });
                                 Navigator.pushNamed(context, HomeScreen.id);
                               } on FirebaseAuthException catch (error) {
