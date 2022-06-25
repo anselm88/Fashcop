@@ -5,6 +5,7 @@ import 'package:fashcop/screens/home_screen.dart';
 import 'package:fashcop/screens/home_page.dart';
 import 'package:fashcop/screens/profile_screen.dart';
 import 'package:fashcop/screens/single_project_screen.dart';
+import 'package:fashcop/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fashcop/screens/login_screen.dart';
 import 'package:fashcop/screens/first_signup_screen.dart';
@@ -52,13 +53,15 @@ class MyApp extends StatelessWidget {
         ),
         title: 'FashCoP',
         debugShowCheckedModeBanner: false,
-        initialRoute: FirstSignUpScreen.id,
+        // initialRoute: HomeScreen.id,
+        initialRoute: SplashScreen.splashSCreenId,
         routes: {
           HomeScreen.id: (context) => HomeScreen(),
           LoginScreen.id: (context) => LoginScreen(),
           FirstSignUpScreen.id: (context) => FirstSignUpScreen(),
           SecondSignUpScreen.id: (context) => SecondSignUpScreen(),
           FinalSignUpScreen.id: (context) => FinalSignUpScreen(),
+          SplashScreen.splashSCreenId: (context) => const SplashScreen(),
           //AnotherUsersProfile.id: (context) => AnotherUsersProfile(),
           //ProfileScreen.id: (context) => ProfileScreen(),
           //SingleProjectScreen.id: (context) => SingleProjectScreen(),

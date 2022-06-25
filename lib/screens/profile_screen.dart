@@ -35,8 +35,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .where('userID', isEqualTo: getCurrentUser())
           .get();
 
-  late String userName;
-  late String userImageUrl;
+  String? userName;
+  String? userImageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -160,12 +160,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           Map<String, dynamic> projectData = projectsList[index]
                               .data() as Map<String, dynamic>;
+                          print(projectData['projectImageURL']);
                           return ProjectCard(
                             userName: userName,
                             projectLocation: projectData['projectLocation'],
                             userImagePath: userImageUrl,
                             briefDescription: projectData['briefDescription'],
-                            projectImagePath: projectData['projectImage'],
+                            projectImagePath: projectData['projectImageURL'],
                             //userEmail: 'johndoe@email.com',
                             projectName: projectData['projectName'],
                             numberOfLikes: 0,

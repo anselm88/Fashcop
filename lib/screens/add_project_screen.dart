@@ -292,20 +292,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               UploadTask uploadTask = ref.putFile(_imageFile!);
                               uploadTask.whenComplete(() async {
                                 projectImageUrl = await ref.getDownloadURL();
+                                _addProjectMap.projectImageURL =
+                                    projectImageUrl;
+                                _addProjectMap.createdTime = DateTime.now();
                                 print(projectImageUrl);
+                                try {
+                                  print('image url try');
+                                  await FirebaseFirestore.instance
+                                      .collection('projectsMap')
+                                      .add(_addProjectMap.toJson());
+                                } catch (e) {
+                                  print(e);
+                                }
                               }).catchError((onError) {
                                 print(onError);
                               });
-                              _addProjectMap.projectImageURL = projectImageUrl;
-                              _addProjectMap.createdTime = DateTime.now();
-
-                              try {
-                                await FirebaseFirestore.instance
-                                    .collection('projectsMap')
-                                    .add(_addProjectMap.toJson());
-                              } catch (e) {
-                                print(e);
-                              }
                             }),
                       ],
                     ),
