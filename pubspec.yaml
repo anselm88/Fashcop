@@ -43,6 +43,7 @@ dependencies:
   fluttertoast: ^8.0.9
   firebase_storage: ^10.2.18
   animated_splash_screen: ^1.2.0
+  font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
   flutter_test:

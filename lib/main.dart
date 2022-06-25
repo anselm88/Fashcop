@@ -1,4 +1,6 @@
 import 'package:fashcop/components/signup_data.dart';
+import 'package:fashcop/investor%20screens/investor_home_page.dart';
+import 'package:fashcop/investor%20screens/investor_home_screen.dart';
 import 'package:fashcop/models/favorite_provider.dart';
 import 'package:fashcop/screens/another_users_profile.dart';
 import 'package:fashcop/screens/home_screen.dart';
@@ -62,6 +64,7 @@ class MyApp extends StatelessWidget {
           SecondSignUpScreen.id: (context) => SecondSignUpScreen(),
           FinalSignUpScreen.id: (context) => FinalSignUpScreen(),
           SplashScreen.splashSCreenId: (context) => const SplashScreen(),
+          InvestorHomeScreen.id: (context) => InvestorHomeScreen(),
           //AnotherUsersProfile.id: (context) => AnotherUsersProfile(),
           //ProfileScreen.id: (context) => ProfileScreen(),
           //SingleProjectScreen.id: (context) => SingleProjectScreen(),

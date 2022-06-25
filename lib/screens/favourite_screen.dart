@@ -57,19 +57,19 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   onFullProject: () {
                     Navigator.pushNamed(context, SingleProjectScreen.id,
                         arguments: ProductArguments(
-                            favoritesList[index].id, favoriteData['userID']));
+                            favoritesList[index].id, favoriteData['ownerId']));
                   },
                   onUserName: () {
                     Navigator.pushNamed(context, AnotherUsersProfile.id,
                         arguments:
-                            ProjectOwnerArguments(favoriteData['userID']));
+                            ProjectOwnerArguments(favoriteData['ownerId']));
                   },
 
                   onProjectImage: () {},
                   onLike: () {},
                   onComment: () {},
                   projectId: favoritesList[index].id,
-                  ownerID: favoriteData['userID'],
+                  ownerID: favoriteData['ownerId'],
                 );
               },
             );

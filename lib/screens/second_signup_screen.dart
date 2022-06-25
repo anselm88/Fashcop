@@ -259,36 +259,36 @@ class _SecondSignUpScreen extends State<SecondSignUpScreen> {
                                     ref.putFile(_imageFile!);
                                 uploadTask.whenComplete(() async {
                                   profileImageUrl = await ref.getDownloadURL();
+                                  try {
+                                    setState(() {
+                                      Provider.of<SignupFormData>(context,
+                                              listen: false)
+                                          .fullName = fullName;
+                                      Provider.of<SignupFormData>(context,
+                                              listen: false)
+                                          .userName = userName;
+                                      Provider.of<SignupFormData>(context,
+                                              listen: false)
+                                          .dateofBirth = dateOfBirth;
+                                      Provider.of<SignupFormData>(context,
+                                              listen: false)
+                                          .location = location;
+                                      Provider.of<SignupFormData>(context,
+                                              listen: false)
+                                          .gender = selectGender;
+                                      Provider.of<SignupFormData>(context,
+                                              listen: false)
+                                          .profileImageURL = profileImageUrl;
+                                    });
+                                    Navigator.pushNamed(
+                                        context, FinalSignUpScreen.id);
+                                  } catch (e) {
+                                    print(e);
+                                  }
                                   print(profileImageUrl);
                                 }).catchError((onError) {
                                   print(onError);
                                 });
-                                try {
-                                  setState(() {
-                                    Provider.of<SignupFormData>(context,
-                                            listen: false)
-                                        .fullName = fullName;
-                                    Provider.of<SignupFormData>(context,
-                                            listen: false)
-                                        .userName = userName;
-                                    Provider.of<SignupFormData>(context,
-                                            listen: false)
-                                        .dateofBirth = dateOfBirth;
-                                    Provider.of<SignupFormData>(context,
-                                            listen: false)
-                                        .location = location;
-                                    Provider.of<SignupFormData>(context,
-                                            listen: false)
-                                        .gender = selectGender;
-                                    Provider.of<SignupFormData>(context,
-                                            listen: false)
-                                        .profileImageURL = profileImageUrl;
-                                  });
-                                  Navigator.pushNamed(
-                                      context, FinalSignUpScreen.id);
-                                } catch (e) {
-                                  print(e);
-                                }
                               }
                             }),
                       ],
