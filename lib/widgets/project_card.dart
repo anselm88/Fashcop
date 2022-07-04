@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fashcop/models/favorite_provider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +57,7 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
 
     FirebaseFirestore.instance
@@ -84,7 +86,7 @@ class _ProjectCardState extends State<ProjectCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(2.50),
               child: ListTile(
                 leading: widget.userImagePath == ""
                     ? const CircleAvatar(
@@ -112,15 +114,28 @@ class _ProjectCardState extends State<ProjectCard> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(5.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
                     width: MediaQuery.of(context).size.width,
-                    child: Text(widget.briefDescription),
+                    child: Text("Title: ${widget.projectName}",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        )),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text("Brief Description: ${widget.briefDescription}",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        )),
                   ),
                   widget.projectImagePath == null
                       ? const SizedBox()
                       : GestureDetector(
                           onTap: widget.onProjectImage,
                           child: Container(
+                            padding: EdgeInsets.all(0),
                             height: 300,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -131,16 +146,6 @@ class _ProjectCardState extends State<ProjectCard> {
                             ),
                           ),
                         ),
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(widget.projectName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        )),
-                  ),
                   const Divider(
                     color: Colors.black54,
                   ),
@@ -150,7 +155,7 @@ class _ProjectCardState extends State<ProjectCard> {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
                                 isFavorite = !isFavorite;
 
@@ -174,7 +179,21 @@ class _ProjectCardState extends State<ProjectCard> {
                                       .doc(widget.projectId)
                                       .delete();
                                 }
+
+                                // Function logAnalyticsEvent(String id) {
+                                //   FirebaseAnalytics().logEvent(
+                                //     name: 'favorite',
+                                //     parameters: {
+                                //       'projectId': id,
+                                //     },
+                                //   );
+                                // }
                               });
+
+                              // await FirebaseAnalytics.instance.logSelectContent(
+                              //   contentType: "image",
+                              //   itemId: widget.projectId,
+                              // );
                             },
                             icon: Icon(
                               isFavorite
@@ -184,7 +203,7 @@ class _ProjectCardState extends State<ProjectCard> {
                             ),
                           ),
                           Text(
-                            '${widget.numberOfLikes} Likes',
+                            ' Likes',
                             style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.black54,
@@ -209,6 +228,7 @@ class _ProjectCardState extends State<ProjectCard> {
                     ],
                   ),
                   Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     width: MediaQuery.of(context).size.width,
                     child: const Text('1 hour ago',
                         style: TextStyle(

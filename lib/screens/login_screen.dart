@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:fashcop/screens/home_screen.dart';
+import 'package:fashcop/screens/splash_screen.dart';
 import 'package:fashcop/variables/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -173,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildRememberMe(),
-                            buildForgotPassBtn(),
+                            //buildForgotPassBtn(),
                           ],
                         ),
 
@@ -186,7 +187,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       await _auth.signInWithEmailAndPassword(
                                           email: email, password: password);
 
-                                  Navigator.pushNamed(context, HomeScreen.id);
+                                  Navigator.pushNamed(
+                                      context, SplashScreen.splashSCreenId);
                                 } on FirebaseAuthException catch (error) {
                                   Fluttertoast.showToast(
                                       msg: error.message!,

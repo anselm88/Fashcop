@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fashcop/screens/another_users_profile.dart';
 import 'package:fashcop/screens/single_project_screen.dart';
 import 'package:fashcop/widgets/project_card.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -84,8 +87,16 @@ class _HomePageState extends State<HomePage> {
                       },
 
                       onProjectImage: () {},
-                      onLike: () {},
-                      onComment: () {},
+                      onLike: () async {},
+                      onComment: () async {
+                        await FirebaseAnalytics.instance.logEvent(
+                          name: "Farmer_Liked_post",
+                          parameters: {
+                            "projectID": projectsList[index].id,
+                            "projectTite": projectData['projectName'],
+                          },
+                        );
+                      },
                       projectId: projectsList[index].id,
                       ownerID: projectData['userID'],
                     );

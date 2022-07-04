@@ -1,10 +1,13 @@
 import 'package:fashcop/screens/add_project_screen.dart';
 import 'package:fashcop/screens/favourite_screen.dart';
 import 'package:fashcop/screens/home_page.dart';
+import 'package:fashcop/screens/login_screen.dart';
 import 'package:fashcop/screens/profile_screen.dart';
 import 'package:fashcop/variables/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -66,9 +69,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          title: const Text(
-            "FaSHCoP",
-            style: kHeadingStyle,
+          title: Row(
+            children: [
+              const Text(
+                "FaSHCoP",
+                style: kHeadingStyle,
+              ),
+              IconButton(
+                  color: Colors.red,
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacementNamed(context, LoginScreen.id);
+                  },
+                  icon: FaIcon(FontAwesomeIcons.signOut)),
+            ],
           ),
         ),
       ),
