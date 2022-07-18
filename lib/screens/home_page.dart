@@ -89,6 +89,8 @@ class _HomePageState extends State<HomePage> {
                       onProjectImage: () {},
                       onLike: () async {},
                       onComment: () async {
+                        await FirebaseAnalytics.instance
+                            .setUserId(id: userData['userId']);
                         await FirebaseAnalytics.instance.logEvent(
                           name: "Farmer_Liked_post",
                           parameters: {

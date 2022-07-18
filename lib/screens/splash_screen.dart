@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fashcop/investor%20screens/investor_home_screen.dart';
 import 'package:fashcop/screens/home_screen.dart';
 import 'package:fashcop/screens/login_screen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -43,14 +44,18 @@ class _SplashScreenState extends State<SplashScreen> {
         .map(
       (doc) {
         var accountType = doc.data()!['accountType'];
+        var userID = doc.data()!['userId'];
         debugPrint("Account type gotten....: $accountType");
+        debugPrint("Account type gotten....: $userID");
         if (FirebaseAuth.instance.currentUser == null) {
           Navigator.pushReplacementNamed(context, LoginScreen.id);
         } else {
           if (accountType == "FARMER") {
             Navigator.pushReplacementNamed(context, HomeScreen.id);
+            FirebaseAnalytics.instance.setUserId(id: userID);
           } else {
             Navigator.pushReplacementNamed(context, InvestorHomeScreen.id);
+            FirebaseAnalytics.instance.setUserId(id: userID);
           }
         }
         return accountType;

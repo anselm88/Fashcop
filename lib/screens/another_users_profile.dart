@@ -3,6 +3,7 @@ import 'package:fashcop/screens/single_project_screen.dart';
 import 'package:fashcop/widgets/custom_app_bar.dart';
 import 'package:fashcop/widgets/project_card.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AnotherUsersProfile extends StatefulWidget {
   static const String id = 'another_users_profile';
@@ -134,14 +135,44 @@ class _AnotherUsersProfileState extends State<AnotherUsersProfile> {
                                       color: Colors.black45,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold)),
-                              Text(userData['email'],
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  )),
-                              Text(userData['phoneNumber'],
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  )),
+                              TextButton(
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.all(0),
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    minimumSize: Size(0, 30),
+                                    side: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  child: Text(userData['email'],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                      )),
+                                  onPressed: () {
+                                    launch(
+                                        'mailto:${userData['email']}?subject=Fashcop');
+                                  }),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.all(0),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  minimumSize: Size(0, 30),
+                                  side: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                child: Text(userData['phoneNumber'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                    )),
+                                onPressed: () {
+                                  launch('tel:${userData['phoneNumber']}');
+                                },
+                              ),
                             ],
                           ),
                         ),

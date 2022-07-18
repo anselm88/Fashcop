@@ -18,8 +18,10 @@ class InvestorHomePage extends StatefulWidget {
 class _InvestorHomePageState extends State<InvestorHomePage> {
   bool isFavorite = false;
 
-  Stream<QuerySnapshot> projectRef =
-      FirebaseFirestore.instance.collection('projectsMap').snapshots();
+  Stream<QuerySnapshot> projectRef = FirebaseFirestore.instance
+      .collection('projectsMap')
+      .orderBy("createdTime", descending: true)
+      .snapshots();
 
   Stream<DocumentSnapshot> userRef(String userID) => FirebaseFirestore.instance
       .collection('users')

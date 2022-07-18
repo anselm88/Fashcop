@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 "FaSHCoP",

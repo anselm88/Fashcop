@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fashcop/components/signup_data.dart';
 import 'package:fashcop/investor%20screens/investor_home_screen.dart';
+import 'package:fashcop/screens/confirm_email.dart';
 import 'package:fashcop/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -165,17 +166,17 @@ class _FinalSignUpScreen extends State<FinalSignUpScreen> {
                                           listen: false)
                                       .accountType,
                                 });
-                                if (Provider.of<SignupFormData>(context,
-                                            listen: false)
-                                        .accountType ==
-                                    "FARMER") {
-                                  Navigator.pushReplacementNamed(
-                                      context, HomeScreen.id);
-                                } else {
-                                  Navigator.pushReplacementNamed(
-                                      context, InvestorHomeScreen.id);
-                                }
-                                // Navigator.pushNamed(context, HomeScreen.id);
+                                // if (Provider.of<SignupFormData>(context,
+                                //             listen: false)
+                                //         .accountType ==
+                                //     "FARMER") {
+                                //   Navigator.pushReplacementNamed(
+                                //       context, HomeScreen.id);
+                                // } else {
+                                //   Navigator.pushReplacementNamed(
+                                //       context, InvestorHomeScreen.id);
+                                // }
+                                Navigator.pushNamed(context, ConfirmEmail.id);
                               } on FirebaseAuthException catch (error) {
                                 Fluttertoast.showToast(
                                     msg: error.message!,
